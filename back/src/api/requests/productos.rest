@@ -15,17 +15,17 @@ content-type: application/json
     "id_categoria": 1
 }
 ###
-PUT http://localhost:3000/api/productos/1 HTTP/1.1
+PUT http://localhost:3000/api/productos/3 HTTP/1.1
 content-type: application/json
 
-{
-    "nombre": "Camiseta",
-    "precio": 1500,
-    "descripcion": "Remera de talle S oversize",
-    "active": true,
-    "imagen": "aca iria la url de la imagen",
-    "id_categoria": 1
-}
+    {
+      "nombre": "Pintura de 2L",
+      "precio": 1200,
+      "descripcion": "Pintura de 2L para exteriores e interiores",
+      "active": 1,
+      "imagen": "aca iria la url de la imagen",
+      "id_categoria": 2
+    }
 
 ###
 DELETE http://localhost:3000/api/productos/4 HTTP/1.1

@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 
         res.status(200).json({ 
             payload: rows,
-            message: rows.length === 0 ? "No se encontraron productos" : "Productos encontrados"
+            message: rows.length === 0 ? "No se encontraron productos" : `${rows.length} Productos encontrados`
         })
     } catch (error) {
         console.error(error);

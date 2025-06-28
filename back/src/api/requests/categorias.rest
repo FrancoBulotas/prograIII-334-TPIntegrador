@@ -1,0 +1,25 @@
+
+
+GET http://localhost:3000/api/categorias HTTP/1.1
+content-type: application/json
+###
+GET http://localhost:3000/api/categorias/1 HTTP/1.1
+content-type: application/json
+###
+POST http://localhost:3000/api/categorias HTTP/1.1
+content-type: application/json
+
+{
+    "nombre": "aaa"
+}
+###
+PUT http://localhost:3000/api/categorias/3 HTTP/1.1
+content-type: application/json
+
+{    
+    "nombre": "Neumaticos"
+}
+
+###
+DELETE http://localhost:3000/api/categorias/4 HTTP/1.1
+content-type: application/json
