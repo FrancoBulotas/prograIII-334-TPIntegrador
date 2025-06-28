@@ -4,14 +4,13 @@ import env from './src/api/config/environments.js';
 import cors from 'cors';
 
 import productosRouter from './src/api/controllers/productos.js';
+import categoriasRouter from './src/api/controllers/categorias.js';
+import authRouter from './src/api/controllers/auth.js';
 
 const PORT = env.port;
 const app = express();
 
-
 // Middlewares de aplicacion //
-// Aplicados a nivel global para todas las solicitudes: autenticacion, registro de solicitudes o logging, analisis del cuerpo de la solicitud body parsing
-// Middleware para parsear el JSON del body en peticiones POST, PUT o PATCH
 app.use(express.json()); 
 // Middleware CORS basico que permite todas las solicitudes
 app.use(cors()); 
@@ -22,10 +21,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/productos", productosRouter);
-
-app.get("/", (req, res) => {
-    res.send("Hola mundo.")
-});
+app.use("/api/categorias", categoriasRouter);
+app.use("/api/auth", authRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`)
