@@ -1,0 +1,15 @@
+
+
+GET http://localhost:3000/api/ventas HTTP/1.1
+content-type: application/json
+###
+GET http://localhost:3000/api/ventas/1 HTTP/1.1
+content-type: application/json
+###
+POST http://localhost:3000/api/ventas HTTP/1.1
+content-type: application/json
+
+{
+    "id_usuario": 1,
+    "total": 53000
+}

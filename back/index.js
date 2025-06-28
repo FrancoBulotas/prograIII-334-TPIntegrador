@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import productosRouter from './src/api/controllers/productos.js';
 import categoriasRouter from './src/api/controllers/categorias.js';
+import ventasRouter from './src/api/controllers/ventas.js';
 import authRouter from './src/api/controllers/auth.js';
 
 const PORT = env.port;
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 app.use("/api/productos", productosRouter);
 app.use("/api/categorias", categoriasRouter);
+app.use("/api/ventas", ventasRouter);
 app.use("/api/auth", authRouter);
 
 app.listen(PORT, () => {
