@@ -1,0 +1,30 @@
+
+GET http://localhost:3000/api/ventas HTTP/1.1
+content-type: application/json
+###
+GET http://localhost:3000/api/ventas/1 HTTP/1.1
+content-type: application/json
+###
+POST http://localhost:3000/api/ventas HTTP/1.1
+content-type: application/json
+
+{
+    "cliente": "Prueba",
+    "total": 2670
+}
+###
+GET http://localhost:3000/api/ventas/obtener/detalle HTTP/1.1
+content-type: application/json
+###
+GET http://localhost:3000/api/ventas/detalle/1 HTTP/1.1
+content-type: application/json
+###
+POST http://localhost:3000/api/ventas/detalle HTTP/1.1
+content-type: application/json
+
+{
+    "id_venta": 1,
+    "id_producto": 3,
+    "cantidad": 1,
+    "precio_unitario": 75000
+}
