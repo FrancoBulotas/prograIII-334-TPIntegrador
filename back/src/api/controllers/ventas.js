@@ -64,12 +64,12 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    let { id_usuario, total } = req.body;
+    let { cliente, total } = req.body;
 
-    let sql = `INSERT INTO ventas (id_usuario, fecha, total) VALUES (?, ?, ?)`;
+    let sql = `INSERT INTO ventas (cliente, fecha, total) VALUES (?, ?, ?)`;
 
     try {
-        if (!id_usuario || !total) {
+        if (!cliente || !total) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
         }
 
@@ -77,11 +77,72 @@ router.post("/", async (req, res) => {
             .setZone("America/Argentina/Buenos_Aires")
             .toFormat("yyyy-MM-dd HH:mm:ss");
 
-        let [result] = await connection.query(sql, [id_usuario, fecha, total]);
+        let [result] = await connection.query(sql, [cliente, fecha, total]);
 
         res.status(201).json({ 
-            message: "Venta creada exitosamente",
+            message: "Venta registrada exitosamente",
             payload: { id_venta: result.insertId }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+});
+
+router.get("/obtener/detalle", async (req, res) => {
+    let sql = `SELECT * FROM detalleVenta`;
+
+    try {
+        let [rows] = await connection.query(sql);
+
+        res.status(200).json({ 
+            payload: rows,
+            message: rows.length === 0 ? "No se encontraron detalles de ventas" : `${rows.length} Detalles de ventas encontrados`
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+});
+
+router.get("/detalle/:id", async (req, res) => {
+    let { id } = req.params;
+
+    let sql = `SELECT * FROM detalleVenta WHERE id_venta = ?`;
+
+    try {
+        if (!id) {
+            return res.status(400).json({ message: "El ID es requerido" });
+        }
+
+        let [row] = await connection.query(sql, [id]);
+
+        if (row.length === 0) {
+            return res.status(404).json({ message: "Detalle de venta no encontrado" });
+        }
+
+        res.status(200).json({ payload: row });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+}); 
+
+router.post("/detalle", async (req, res) => {
+    let { id_venta, id_producto, cantidad, precio_unitario } = req.body;
+
+    let sql = `INSERT INTO detalleVenta (id_venta, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)`;
+
+    try {
+        if (!id_venta || !id_producto || !cantidad || !precio_unitario) {
+            return res.status(400).json({ message: "Todos los campos son requeridos" });
+        }
+
+        let [result] = await connection.query(sql, [id_venta, id_producto, cantidad, precio_unitario]);
+
+        res.status(201).json({ 
+            message: "Detalle de venta registrado exitosamente",
+            payload: { id_detalle: result.insertId }
         });
     } catch (error) {
         console.error(error);

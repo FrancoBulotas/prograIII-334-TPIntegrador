@@ -8,6 +8,7 @@ const connection = mysql2.createPool({
     host: database.host,
     database: database.name,
     user: database.user,
+    // port: database.port,
     password: database.password
 });
 
