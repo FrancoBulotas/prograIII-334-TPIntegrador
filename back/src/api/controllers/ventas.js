@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 
 const router = Router();
 
+// ventas:
 // [DONE] -	GET /ventas * 		    -> en este la idea es que se tome el carrito y se separe en prods y se agreguen en la tabla detalleVenta
 // [DONE] -	GET /ventas/:id *
 // [DONE] -	POST /ventas 		    -> se llama una vez se realiza la compra
@@ -12,6 +13,12 @@ const router = Router();
 // ver bien como implementar estas dos despues
 // - GET /ventas/:id/ticket 	-> genera y obtiene el ticket de la compra realizada
 // - GET /ventas/exportar * 	-> se podría hacer que se exporten todas las ventas en un Excel
+
+// detalleVenta:
+// [DONE] -	GET /ventas/detalle * 
+// [DONE] -	GET /ventas/detalle/:id * 	-> se podría buscar por id_venta o id_producto
+// [DONE] -	POST /ventas/detalle 		-> se llama una vez se realiza la compra con con el id de la venta generada anteriormente
+
 
 // * hace referencia a los endpoints que necesitas autenticacion de admin (todavia no implementado) 
 
