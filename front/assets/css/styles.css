@@ -14,36 +14,110 @@ nav {
 /* --------Seccion index --------------*/
 
 .general-content{
-    border : 2px solid blue;
     padding: 20px;
     text-align: center;
-    align-items:center;
-    justify-content:center;
-    margin-top: 100px; /* Agrega espacio entre el header y la sección */
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px; 
 }
+
 .general-content button,
 .general-content input {
     display: block;
     margin: 10px auto;
-    width: 180px;
+    width: 250px;
 }
+
 #nombre-usuario {
     padding: 10px;
-    border: 2px solid#334cbc;
+    border: 1px solid#a2a3a7;
+    box-shadow: none;
+    outline: none;
     border-radius: 5px;
-    width: 200px;
-    text-align: center;; 
+    text-align: left; 
 }
 
 /* Boton Ingresar*/
 #boton-ingresar {
-    background-color: #334cbc; 
+    background-color: #3178FF; 
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 270px;
+    transition: 0.3s ease;
 }
 #boton-ingresar:hover {
-    background-color: #3f5ee5; 
+    background-color: #2457b6; 
+}
+
+
+
+/* --------Seccion Productos --------------*/
+
+#listado-productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    margin: auto 200px;
+    gap: 5px;
+}
+
+.producto-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    max-width: 200px;
+}
+
+.producto-item img {
+    width: 100%;
+    height: auto;
+}
+
+.producto-item h3 {    
+    margin: 10px 0;
+}
+
+.producto-item p {
+    margin: 5px 0;
+}
+
+.boton-agregar-carrito {
+    background-color: #3178FF; 
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s ease;
+}
+
+.boton-agregar-carrito:hover {
+    background-color: #2457b6; 
+}
+
+
+@media (max-width: 932px) {
+    #listado-productos {    
+        margin: auto 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    #listado-productos {    
+        padding: 0px;
+        margin: 0px;
+
+    }
+
+    .producto-item {
+        max-width: 150px;
+        margin: 10px 0;
+    }
 }
