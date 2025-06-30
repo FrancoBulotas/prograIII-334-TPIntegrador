@@ -10,3 +10,40 @@ nav {
     padding: 10px;
     text-align: center;
 }
+
+/* --------Seccion index --------------*/
+
+.general-content{
+    border : 2px solid blue;
+    padding: 20px;
+    text-align: center;
+    align-items:center;
+    justify-content:center;
+    margin-top: 100px; /* Agrega espacio entre el header y la sección */
+}
+.general-content button,
+.general-content input {
+    display: block;
+    margin: 10px auto;
+    width: 180px;
+}
+#nombre-usuario {
+    padding: 10px;
+    border: 2px solid#334cbc;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;; 
+}
+
+/* Boton Ingresar*/
+#boton-ingresar {
+    background-color: #334cbc; 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#boton-ingresar:hover {
+    background-color: #3f5ee5; 
+}
