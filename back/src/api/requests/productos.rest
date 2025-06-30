@@ -7,12 +7,12 @@ POST http://localhost:3000/api/productos HTTP/1.1
 content-type: application/json
 
 {
-    "nombre": "camisa",
-    "precio": 1200,
-    "descripcion": "email@mail.com",
-    "active": true,
+    "nombre": "Neumatico de calle",
+    "precio": 30000,
+    "descripcion": "Para calle y ruta",
+    "active": 1,
     "imagen": "aca iria la url de la imagen",
-    "id_categoria": 1
+    "id_categoria": 2
 }
 ###
 PUT http://localhost:3000/api/productos/3 HTTP/1.1
