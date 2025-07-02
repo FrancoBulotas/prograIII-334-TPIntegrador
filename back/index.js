@@ -4,13 +4,22 @@ import env from './src/api/config/environments.js';
 import cors from 'cors';
 
 import middlewares from './src/api/middlewares/middlewares.js';
-import productosRouter from './src/api/controllers/productos.js';
+import productosRouter from './src/api/controllers/productos.controllers.js';
 import categoriasRouter from './src/api/controllers/categorias.js';
 import ventasRouter from './src/api/controllers/ventas.js';
 import authRouter from './src/api/controllers/auth.js';
 
+import { viewRouter } from './src/api/routes/index.js';
+
+import { __dirname, join } from './src/api/utils/index.js';
+
 const PORT = env.port;
 const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', join(__dirname, 'src/views'));
+
+app.use(express.static(join(__dirname, 'src/public')));
 
 // Middlewares de aplicacion //
 app.use(express.json()); 
@@ -19,10 +28,14 @@ app.use(cors());
 
 app.use(middlewares.logger); 
 
+// rutas de la API //
 app.use("/api/productos", productosRouter);
 app.use("/api/categorias", categoriasRouter);
 app.use("/api/ventas", ventasRouter);
 app.use("/api/auth", authRouter);
+
+// rutas de la aplicacion ejs //
+app.use('/dashboard', viewRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`)

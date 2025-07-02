@@ -8,6 +8,16 @@ const logger = (req, res, next) => {
     next();
 };
 
+export const validarId = (req, res, next) => {
+  const id = req.params.id;
+
+  if (!id || isNaN(id)) {
+    return res.status(400).json({ message: 'ID inválido.' });
+  }
+
+  next();
+}
+
 // en caso de que se mande un token en el header de la solicitud, se verifica que sea valido
 // lo dejo por las dudas pero creo que con EJS no se va a usar
 export const verificarToken = (req, res, next) => {
@@ -30,5 +40,6 @@ export const verificarToken = (req, res, next) => {
 
 export default {
     logger, 
-    verificarToken
+    verificarToken,
+    validarId
 };

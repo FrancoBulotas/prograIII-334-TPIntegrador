@@ -4,6 +4,8 @@ import connection  from '../database/db.js';
 
 const router = Router();
 
+import Productos from "../models/productos.models.js";
+
 // [DONE] -	GET /productos
 // [DONE] -	GET /productos/:id
 // [DONE] -	POST /productos *
@@ -13,11 +15,10 @@ const router = Router();
 
 // * hace referencia a los endpoints que necesitas autenticacion de admin (todavia no implementado) 
 
-router.get("/", async (req, res) => {
-    let sql = `SELECT * FROM productos`;
 
+export const getAllProducts = async () => {
     try {
-        let [rows] = await connection.query(sql);
+        let [rows] = Productos.selectAllProducts();
 
         res.status(200).json({ 
             payload: rows,
@@ -27,16 +28,16 @@ router.get("/", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
-});
+};
 
 router.get("/:id", async (req, res) => {
     let { id } = req.params;
     let sql = `SELECT * FROM productos WHERE id = ?`;    
 
     try {
-        if (!id) {
-            return res.status(400).json({ message: "El ID es requerido" });
-        }
+        // if (!id) {
+        //     return res.status(400).json({ message: "El ID es requerido" });
+        // }
         let [rows] = await connection.query(sql, [id]);
 
         if (rows.length === 0) {
@@ -79,9 +80,9 @@ router.put("/:id", async (req, res) => {
     let sql = `UPDATE productos SET nombre = ?, precio = ?, descripcion = ?, imagen = ?, active = ?, id_categoria = ? WHERE id_producto = ?`;    
    
     try {
-        if (!id) {
-            return res.status(400).json({ message: "El ID es requerido" });
-        }
+        // if (!id) {
+        //     return res.status(400).json({ message: "El ID es requerido" });
+        // }
 
         if (!nombre || !precio || !descripcion || !imagen || active === undefined || !id_categoria) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
@@ -107,9 +108,9 @@ router.delete("/:id", async (req, res) => {
     let sql = `DELETE FROM productos WHERE id_producto = ?`;
 
     try {
-        if (!id) {
-            return res.status(400).json({ message: "El ID es requerido" });
-        }
+        // if (!id) {
+        //     return res.status(400).json({ message: "El ID es requerido" });
+        // }
 
         let [result] = await connection.query(sql, [id]);
 
