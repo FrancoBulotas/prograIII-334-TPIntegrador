@@ -1,9 +1,9 @@
 
-import Productos from "../models/productos.models.js";
+import Products from "../models/productos.models.js";
 
 export const getProductsList = async (req, res) => {
     try {
-        let [rows] = await Productos.selectAllProducts();
+        let [rows] = await Products.selectAllProducts();
 
         res.render('index', {
             title: 'AutoPartes Dashboard',

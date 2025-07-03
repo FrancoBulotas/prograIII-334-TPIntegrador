@@ -1,10 +1,5 @@
 
-import { Router } from "express";
-import connection  from '../database/db.js';
-
-const router = Router();
-
-import Productos from "../models/productos.models.js";
+import Products from "../models/productos.models.js";
 
 // [DONE] -	GET /productos
 // [DONE] -	GET /productos/:id
@@ -15,14 +10,13 @@ import Productos from "../models/productos.models.js";
 
 // * hace referencia a los endpoints que necesitas autenticacion de admin (todavia no implementado) 
 
-
-export const getAllProducts = async () => {
+export const getAllProducts = async (req, res) => {
     try {
-        let [rows] = Productos.selectAllProducts();
+        let [prods] = await Products.selectAllProducts();
 
         res.status(200).json({ 
-            payload: rows,
-            message: rows.length === 0 ? "No se encontraron productos" : `${rows.length} Productos encontrados`
+            payload: prods,
+            message: prods.length === 0 ? "No se encontraron productos" : `${prods.length} Productos encontrados`
         })
     } catch (error) {
         console.error(error);
@@ -30,37 +24,35 @@ export const getAllProducts = async () => {
     }
 };
 
-router.get("/:id", async (req, res) => {
-    let { id } = req.params;
-    let sql = `SELECT * FROM productos WHERE id = ?`;    
-
+export const getProductById = async (req, res) => {
     try {
-        // if (!id) {
-        //     return res.status(400).json({ message: "El ID es requerido" });
-        // }
-        let [rows] = await connection.query(sql, [id]);
+        let { id } = req.params;
 
-        if (rows.length === 0) {
-            return res.status(404).json({ message: "Producto no encontrado" });
+        let [prods] = await Products.selectProductFromId(id);
+
+        if (prods.length === 0) {
+            return { status: 404, message: "Producto no encontrado" };
         }
 
-        res.status(200).json({ payload: rows });
-    } catch (error) {
+        res.status(200).json({ 
+            message: "Producto encontrado",
+            payload: prods[0]           
+        });
+    } catch (error) {   
         console.error(error);
-        res.status(500).json({ message: error });
+        return { status: 500, message: error }; 
     }
-});
+};
 
-router.post("/", async (req, res) => {
-    let { nombre, precio, descripcion, imagen, active, id_categoria } = req.body;
-    let sql = `INSERT INTO productos (nombre, precio, descripcion, imagen, active, id_categoria) VALUES (?, ?, ?, ?, ?, ?)`;
-
+export const createProduct = async (req, res) => {
     try {
+        let { nombre, precio, descripcion, imagen, active, id_categoria } = req.body;
+
         if (!nombre || !precio || !descripcion || !imagen || active === undefined || !id_categoria) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
         }
 
-        let [result] = await connection.query(sql, [nombre, precio, descripcion, imagen, active, id_categoria]);
+        let [result] = await Products.insertNewProduct(nombre, precio, descripcion, imagen, active, id_categoria);
 
         res.status(201).json({ 
             message: "Producto creado exitosamente",
@@ -70,25 +62,19 @@ router.post("/", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
+};
 
-});
-
-// ver si hace falta que permita modificar todos los campos o solo algunos
-router.put("/:id", async (req, res) => {
-    let { id } = req.params;   
-    let { nombre, precio, descripcion, imagen, active, id_categoria } = req.body;
-    let sql = `UPDATE productos SET nombre = ?, precio = ?, descripcion = ?, imagen = ?, active = ?, id_categoria = ? WHERE id_producto = ?`;    
-   
+export const modifyProduct = async (req, res) => {
     try {
-        // if (!id) {
-        //     return res.status(400).json({ message: "El ID es requerido" });
-        // }
+        let { id } = req.params;   
+        let { nombre, precio, descripcion, imagen, active, id_categoria } = req.body;
 
         if (!nombre || !precio || !descripcion || !imagen || active === undefined || !id_categoria) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
         }
 
-        let [result] = await connection.query(sql, [nombre, precio, descripcion, imagen, active, id_categoria, id]);    
+        let [result] = await Products.updateProduct(id, nombre, precio, descripcion, imagen, active, id_categoria);
+
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Producto no encontrado" });
         }
@@ -101,18 +87,13 @@ router.put("/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }   
-}); 
+}; 
 
-router.delete("/:id", async (req, res) => {
-    let { id } = req.params;
-    let sql = `DELETE FROM productos WHERE id_producto = ?`;
-
+export const removeProduct = async (req, res) => {
     try {
-        // if (!id) {
-        //     return res.status(400).json({ message: "El ID es requerido" });
-        // }
+        let { id } = req.params;
 
-        let [result] = await connection.query(sql, [id]);
+        let [result] = await Products.deleteProduct(id);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Producto no encontrado" });
@@ -123,6 +104,6 @@ router.delete("/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }   
-});
+};
 
-export default router;
+

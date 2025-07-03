@@ -1,15 +1,16 @@
 
 import express from 'express';
 import env from './src/api/config/environments.js';
+
 import cors from 'cors';
 
 import middlewares from './src/api/middlewares/middlewares.js';
-import productosRouter from './src/api/controllers/productos.controllers.js';
+
+import { productosRouter, viewRouter } from './src/api/routes/index.js';
+
 import categoriasRouter from './src/api/controllers/categorias.js';
 import ventasRouter from './src/api/controllers/ventas.js';
 import authRouter from './src/api/controllers/auth.js';
-
-import { viewRouter } from './src/api/routes/index.js';
 
 import { __dirname, join } from './src/api/utils/index.js';
 
@@ -18,7 +19,6 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', join(__dirname, 'src/views'));
-
 app.use(express.static(join(__dirname, 'src/public')));
 
 // Middlewares de aplicacion //

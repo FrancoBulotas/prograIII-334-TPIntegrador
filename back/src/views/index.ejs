@@ -7,16 +7,21 @@
     <%- include('partials/nav.ejs') %>
 
     <main class="container">
-      <h1>Dashboard</h1>
+      <div class="header">
+        <h1>Dashboard</h1>
+      </div>
+      
 
-      <% products.forEach(product => { %>
-        <div class="product">
-          <h2><%= product.nombre %></h2>
-          <p>Precio: $<%= product.precio %></p>
-          <p>Descripción: <%= product.descripcion %></p>
-          <img src="<%= product.imagen %>" alt="<%= product.descripcion %>">
-        </div>
-      <% }) %>
+      <div id="listado-productos">
+        <% products.forEach(product => { %>
+          <div class="producto-item">
+            <img src="<%= product.imagen %>" alt="<%= product.descripcion %>">
+            <h3><%= product.nombre %></h3>
+            <p>Precio: $<%= product.precio %></p>
+            <p>Descripción: <%= product.descripcion %></p>
+          </div>
+        <% }) %>
+      </div>
     </main>
 
     <%- include('partials/footer.ejs') %>
