@@ -11,7 +11,31 @@
     <link rel="stylesheet" href="../assets/css/header.css">
 </head>
 <body>
-    <div id="header"></div>
+    <nav role="navigation">
+        <div class="nav-container">
+            <div class="nav-header">
+                <div class="nav-title">
+                    <img src="/front/assets/images/logo-autopartes.png" alt="Logo" class="logo-image">
+                    <h2>AutoPartes</h2>
+                </div>
+                <div class="alumnos">
+                    <p>Franco Bulotas</p>
+                    <p>Candela Kevarkian</p>
+                </div>
+            </div>
+        
+            <div class="nav-links" id="nav-links">
+                <div><a class="a-nav" href="/front/index.html">Inicio</a></div>
+                <div><a class="a-nav" href="/front/pages/productos.html">Productos</a></div>
+                <div>
+                    <a class="a-nav" href="./carrito.html">
+                        <img class="carrito-image" src="/front/assets/images/carrito-autopartes.png" alt="">
+                        <span class="carrito-count" id="carrito-count">0</span>
+                    </a>
+                </div>            
+            </div>
+        </div>
+    </nav>
 
     <main>
         <div id="listado-productos"></div>
