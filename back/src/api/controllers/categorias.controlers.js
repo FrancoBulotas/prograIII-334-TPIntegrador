@@ -1,8 +1,6 @@
 
-import { Router } from "express";
-import connection  from '../database/db.js';
+import Categories from '../models/categorias.models.js';
 
-const router = Router();
 
 // [DONE] -	GET /categorias
 // [DONE] -	GET /categorias/:id
@@ -12,11 +10,9 @@ const router = Router();
 
 // * hace referencia a los endpoints que necesitas autenticacion de admin (todavia no implementado) 
 
-router.get("/", async (req, res) => {
-    let sql = `SELECT * FROM categorias`;
-
+export const getAllCategories =  async (req, res) => {
     try {
-        let [rows] = await connection.query(sql);
+        let [rows] = await Categories.selectAllCategories();
 
         res.status(200).json({ 
             payload: rows,
@@ -26,20 +22,16 @@ router.get("/", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
+};
 
-});
-
-router.get("/:id", async (req, res) => {
+export const getCategoryById = async (req, res) => {
     let { id } = req.params;
-
-    let sql = `SELECT * FROM categorias WHERE id_categoria = ?`;
-
     try {
         if (!id) {
             return res.status(400).json({ message: "El ID es requerido" });
         }
 
-        let [rows] = await connection.query(sql, [id]);
+        let [rows] = await Categories.selectCategoryById(id);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: "Categoria no encontrada" });
@@ -50,19 +42,17 @@ router.get("/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
-});
+};
 
-router.post("/", async (req, res) => {
+export const createCategory= async (req, res) => {
     let { nombre } = req.body;
-
-    let sql = `INSERT INTO categorias (nombre) VALUES (?)`;
 
     try {
         if (!nombre) {
             return res.status(400).json({ message: "El nombre es requerido" });
         }
 
-        let [result] = await connection.query(sql, [nombre]);
+        let [result] = await Categories.insertNewCategory(nombre);
 
         res.status(201).json({ 
             message: "Categoria creada exitosamente",
@@ -72,20 +62,17 @@ router.post("/", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
-});
+};
 
-router.put("/:id", async (req, res) => {
+export const modifyCategory = async (req, res) => {
     let { id } = req.params;
     let { nombre } = req.body;
-
-    let sql = `UPDATE categorias SET nombre = ? WHERE id_categoria = ?`;
-
     try {
         if (!id || !nombre) {
             return res.status(400).json({ message: "El ID y el nombre son requeridos" });
         }
 
-        let [result] = await connection.query(sql, [nombre, id]);
+        let [result] = await Categories.updateCategory(id, nombre);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Categoria no encontrada" });
@@ -99,19 +86,17 @@ router.put("/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
-});
+};
 
-router.delete("/:id", async (req, res) => {
+export const removeCategory = async (req, res) => {
     let { id } = req.params;
-
-    let sql = `DELETE FROM categorias WHERE id_categoria = ?`;
 
     try {
         if (!id) {
             return res.status(400).json({ message: "El ID es requerido" });
         }
 
-        let [result] = await connection.query(sql, [id]);
+        let [result] = await Categories.deleteCategory(id);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: "Categoria no encontrada" });
@@ -122,6 +107,4 @@ router.delete("/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error });
     }
-}); 
-
-export default router;
+}; 
