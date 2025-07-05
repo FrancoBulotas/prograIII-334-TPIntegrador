@@ -1,31 +1,28 @@
 
 
-import { redirigirACarrito, cargarProductosEnCarrito, cargarCantidadEnHeader } from './carrito.js';
+import { redirigirACarrito, cargarCantidadEnHeader } from './carrito.js';
 
 
-// index.html
-// pantalla de inicio
-document.getElementById("boton-ingresar")?.addEventListener('click', () => {
-    const nombreUsuario = document.getElementById('nombre-usuario').value;
-
-    if (nombreUsuario.trim() === '') {
-        alert('Por favor, ingresa tu nombre.');
-    } else {
-        localStorage.setItem('nombreUsuario', nombreUsuario);
-        window.location.href = '/front/pages/productos.html'; 
-    }
-});
-
+export function obtenerNombreUsuario() {
+    return localStorage.getItem("nombreUsuario");
+}
 
 // productos.html
+function cargarMensaje(mensaje) {
+    const label = document.getElementById("mensaje-bienvenida");
+    label.textContent = mensaje;
+}
 
-async function cargarProductos() {
+async function fetchProductos() {
     const response = await fetch('http://localhost:3000/api/productos');
-    const productos = await response.json();
+    return await response.json();
+}
 
+async function cargarProductos(productos) {
     const listadoProductos = document.getElementById('listado-productos');
 
     if (listadoProductos) {
+        listadoProductos.innerHTML = "";
         productos.payload.forEach(producto => {
             const productoDiv = document.createElement('div');
             productoDiv.classList.add('producto');
@@ -51,9 +48,57 @@ async function cargarProductos() {
     }
 }
 
-function init() {
-    cargarProductos();
-    cargarProductosEnCarrito();
+async function cargarCategorias() {
+    const response = await fetch('http://localhost:3000/api/categorias');
+    const categorias = await response.json();
+
+    
+    const listadoCategorias = document.getElementById('categorias');
+
+    if (listadoCategorias) {
+        // listadoCategorias.innerHTML = "";
+        // const categoriaDiv = document.createElement('div');
+        // categoriaDiv.classList.add('categoria');
+
+        categorias.payload.forEach(categoria => {
+            const categoriaDiv = document.createElement('div');
+            categoriaDiv.classList.add('categoria');
+
+            categoriaDiv.innerHTML += `
+                <div class="categoria-item">
+                    <button class="boton-categoria" id="categoria-${categoria.id_categoria}">${categoria.nombre.toUpperCase()}</button>
+                </div>
+            `;
+
+            listadoCategorias.appendChild(categoriaDiv);
+        });
+
+        categorias.payload.forEach(categoria => {
+            let botonCategoria = document.getElementById(`categoria-${categoria.id_categoria}`);
+            botonCategoria.addEventListener("click", () => filtrarPorCategoria(categoria));
+        });
+    }
+
+    let botonTodasCategorias = document.getElementById("todos-categoria");
+    botonTodasCategorias.addEventListener("click", () => filtrarPorCategoria("TODOS"));
+
+}
+
+async function filtrarPorCategoria(categoria){
+    const productos = await fetchProductos();
+    
+    let productosActualizados = [...productos.payload];
+
+    if(categoria != "TODOS") productosActualizados = productosActualizados.filter(item => item.id_categoria === categoria.id_categoria);
+
+    cargarProductos({ payload: productosActualizados });
+}
+
+async function init() {
+    cargarMensaje(`Bienvenido ${obtenerNombreUsuario()}!`);
+    let productos = await fetchProductos();
+    cargarProductos(productos);
+    cargarCategorias();
     cargarCantidadEnHeader();
 }
 

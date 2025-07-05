@@ -9,7 +9,6 @@
     <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/header.css">
-    <script type="module" src="./assets/js/index.js" ></script>
 </head>
 <body>
     <nav role="navigation">
@@ -24,17 +23,6 @@
                     <p>Candela Kevarkian</p>
                 </div>
             </div>
-        
-            <!-- <div class="nav-links" id="nav-links">
-                <div><a class="a-nav" href="/front/index.html">Inicio</a></div>
-                <div><a class="a-nav" href="/front/pages/productos.html">Productos</a></div>
-                <div>
-                    <a class="a-nav" href="./carrito.html">
-                        <img class="carrito-image" src="/front/assets/images/carrito-autopartes.png" alt="">
-                        <span class="carrito-count" id="carrito-count">0</span>
-                    </a>
-                </div>            
-            </div> -->
         </div>
     </nav>
     <main>
@@ -48,4 +36,16 @@
         </section>
     </main>
 </body>
+<script>
+    document.getElementById("boton-ingresar")?.addEventListener('click', () => {
+        const nombreUsuario = document.getElementById('nombre-usuario').value;
+
+        if (nombreUsuario.trim() === '') {
+            alert('Por favor, ingresa tu nombre.');
+        } else {
+            localStorage.setItem('nombreUsuario', nombreUsuario);
+            window.location.href = '/front/pages/productos.html'; 
+        }
+    });
+</script>
 </html>

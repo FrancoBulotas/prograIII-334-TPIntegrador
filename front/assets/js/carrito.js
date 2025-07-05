@@ -1,5 +1,4 @@
 
-
 function guardarCarritoEnStorage(carrito) {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
@@ -8,47 +7,70 @@ function obtenerCarritoDeStorage() {
     return JSON.parse(localStorage.getItem("carrito")) || [];
 }
 
+let botonContinuarCompra = document.getElementById('continuar-comprando');
+let botonFinalizarCompra = document.getElementById('finalizar-compra');
+botonContinuarCompra?.addEventListener('click', () => window.location.href = "/front/pages/productos.html");
+// botonFinalizarCompra?.addEventListener('click', () => window.location.href = "/front/pages/productos.html");
 
 export function cargarProductosEnCarrito(){
     const carrito = obtenerCarritoDeStorage();
     console.log(carrito)    
 
     const listadoProductosEnCarrito = document.getElementById('listado-productos-en-carrito');
-    listadoProductosEnCarrito.innerHTML = "";
+
     if (listadoProductosEnCarrito) {
-        carrito.forEach(producto => {
-            const productoDiv = document.createElement('div');
-            productoDiv.classList.add('producto');
-
-            if(producto.active) {
-                productoDiv.innerHTML = `
-                <div class="producto-item">
-                    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
-                    <h3>${producto.nombre}</h3>
-                    <p class="p-precio">$ ${producto.precio}</p>
-                    <p class="p-descripcion">${producto.descripcion}</p>
-                    <div class="item-carrito">
-                        <button class="boton-carrito eliminar" id="eliminar-${producto.id_producto}">-</button>
-                        <span class="cantidad-producto">${producto.cantidad}</span>
-                        <button class="boton-carrito agregar" id="agregar-${producto.id_producto}">+</button>
-
-                    </div>
+        listadoProductosEnCarrito.innerHTML = "";
+        if(carrito.length === 0) {
+            listadoProductosEnCarrito.innerHTML = `
+                <div class="container-sin-prods">
+                    <p>No tenes productos en el carrito.</p>
+                    <a href="/front/pages/productos.html" class="boton-agregar-carrito">Ver Productos</a>
                 </div>
             `;
-            }
-            listadoProductosEnCarrito.appendChild(productoDiv);
-        });
 
-        carrito.forEach(producto => {
-            let btnEliminar = document.getElementById(`eliminar-${producto.id_producto}`);
-            btnEliminar.addEventListener("click", () => eliminarDelCarrito(producto));
-        });
+            botonContinuarCompra.style.display = "none";
+            botonFinalizarCompra.style.display = "none";
+        } else {
+            carrito.forEach(producto => {
+                const productoDiv = document.createElement('div');
+                productoDiv.classList.add('producto');
 
-        carrito.forEach(producto => {
-            let btnAgregar = document.getElementById(`agregar-${producto.id_producto}`);
-            btnAgregar.addEventListener("click", () => agregarAlCarrito(producto));
-        });
+                if(producto.active) {
+                    productoDiv.innerHTML = `
+                    <div class="producto-item">
+                        <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
+                        <h3>${producto.nombre}</h3>
+                        <p class="p-precio">$ ${producto.precio}</p>
+                        <p class="p-descripcion">${producto.descripcion}</p>
+                        <div class="item-carrito">
+                            <button class="boton-carrito eliminar" id="eliminar-${producto.id_producto}">-</button>
+                            <span class="cantidad-producto">${producto.cantidad}</span>
+                            <button class="boton-carrito agregar" id="agregar-${producto.id_producto}">+</button>
+
+                        </div>
+                    </div>
+                `;
+                }
+                listadoProductosEnCarrito.appendChild(productoDiv);
+            });
+
+            carrito.forEach(producto => {
+                let btnEliminar = document.getElementById(`eliminar-${producto.id_producto}`);
+                btnEliminar.addEventListener("click", () => eliminarDelCarrito(producto));
+            });
+
+            carrito.forEach(producto => {
+                let btnAgregar = document.getElementById(`agregar-${producto.id_producto}`);
+                btnAgregar.addEventListener("click", () => agregarAlCarrito(producto));
+            });
+
+            
+            botonContinuarCompra.style.display = "block";
+            botonFinalizarCompra.style.display = "block";
+        }
     }
+
+    cargarTotalDelCarrito();
 }
 
 export function cargarCantidadEnHeader() {
@@ -65,10 +87,7 @@ export function cargarCantidadEnHeader() {
 }
 
 export function redirigirACarrito(producto) {
-    
-    console.log(producto);
     window.location.href = '/front/pages/carrito.html'; 
-
     agregarAlCarrito(producto);
 }
 
@@ -85,10 +104,43 @@ function agregarAlCarrito(producto) {
     }
     guardarCarritoEnStorage(carrito);
     cargarProductosEnCarrito();
+    cargarCantidadEnHeader();
 }
-
 
 
 function eliminarDelCarrito(producto) {
-    console.log(producto);
+    const carrito = obtenerCarritoDeStorage();
+    let carritoActualizado = [...carrito];
+
+    const index = carritoActualizado.findIndex(item => item.id_producto === producto.id_producto);
+    if (index !== -1) { 
+        if(carritoActualizado[index].cantidad > 1){
+            carritoActualizado[index].cantidad -= 1;
+        } else { 
+            carritoActualizado = carritoActualizado.filter(item => item.id_producto !== producto.id_producto);
+        }
+    }
+    guardarCarritoEnStorage(carritoActualizado);
+    cargarProductosEnCarrito();
+    cargarCantidadEnHeader();
 }
+
+function cargarTotalDelCarrito() {
+    const carrito = obtenerCarritoDeStorage();
+
+    const labelTotalCarrito = document.getElementById("total-en-carrrito");
+ 
+    if(labelTotalCarrito){
+        labelTotalCarrito.textContent = '';
+
+        let cont = 0;
+        carrito.forEach(item => {
+            cont += (item.cantidad * item.precio);
+        });
+
+        labelTotalCarrito.textContent = `$${cont}`;
+    }
+
+}
+
+cargarProductosEnCarrito();
