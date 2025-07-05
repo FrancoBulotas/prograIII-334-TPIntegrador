@@ -1,6 +1,5 @@
 
-GET http://localhost:3000/prueba HTTP/1.1
-###
+
 GET http://localhost:3000/api/productos/ HTTP/1.1
 content-type: application/json
 ###
@@ -8,19 +7,20 @@ POST http://localhost:3000/api/productos HTTP/1.1
 content-type: application/json
 
 {
-    "nombre": "Neumatico de Rally",
-    "precio": 42000,
-    "descripcion": "Para rally dakar",
-    "active": 1,
+    "nombre": "Bateria de 15.000 mAh",
+    "precio": 14000,
+    "descripcion": "Bateria",
+    "active": true,
     "imagen": "/front/assets/images/neumaticos.jpg",
-    "id_categoria": 1
+          "id_categoria": 3
+
 }
 ###
 PUT http://localhost:3000/api/productos/1 HTTP/1.1
 content-type: application/json
 
     {
-     "nombre": "Bateria de 10.000 mAh",
+     "nombre": "Bateria de 15.000 mAh",
       "precio": 10500,
       "descripcion": "Bateria",
       "active": true,
@@ -29,5 +29,5 @@ content-type: application/json
     }
 
 ###
-DELETE http://localhost:3000/api/productos/1 HTTP/1.1
+DELETE http://localhost:3000/api/productos/5 HTTP/1.1
 content-type: application/json
