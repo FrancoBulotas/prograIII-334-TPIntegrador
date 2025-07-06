@@ -47,5 +47,11 @@
             window.location.href = '/front/pages/productos.html'; 
         }
     });
+    window.addEventListener("DOMContentLoaded", () => {
+        const modoGuardado = localStorage.getItem("modoProductos");
+        if (modoGuardado === "oscuro") {
+            document.body.classList.add("modo-oscuro");
+        }
+        });
 </script>
 </html>
