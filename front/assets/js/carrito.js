@@ -141,5 +141,22 @@ function cargarTotalDelCarrito() {
     }
 
 }
+// window.addEventListener("DOMContentLoaded", () => {
+//     const modoGuardado = localStorage.getItem("modoProductos");
+//     if (modoGuardado === "oscuro") {
+//         document.body.classList.add("modo-oscuro");
+//     }
+//     });
 
 cargarProductosEnCarrito();
+window.addEventListener("DOMContentLoaded", () => {
+  try {
+    const modo = localStorage.getItem("modoProductos");
+    if (modo === "oscuro") {
+      document.body.classList.add("modo-oscuro");
+      document.documentElement.classList.remove("modo-oscuro-temporal");
+    }
+  } catch (error) {
+    console.error("Error aplicando modo oscuro:", error);
+  }
+});
