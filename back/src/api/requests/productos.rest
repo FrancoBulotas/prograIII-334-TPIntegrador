@@ -12,22 +12,22 @@ content-type: application/json
     "descripcion": "Bateria",
     "active": true,
     "imagen": "/front/assets/images/neumaticos.jpg",
-          "id_categoria": 3
+    "id_categoria": 3   
 
 }
 ###
-PUT http://localhost:3000/api/productos/1 HTTP/1.1
+PUT http://localhost:3000/api/productos/9 HTTP/1.1
 content-type: application/json
 
-    {
-     "nombre": "Bateria de 15.000 mAh",
-      "precio": 10500,
-      "descripcion": "Bateria",
-      "active": true,
-      "imagen": "aca iria la url de la imagen",
-      "id_categoria": 3
-    }
+{
+    "nombre": "Bateria de 15.000 mAh",
+    "precio": 14000,
+    "descripcion": "Bateria para autos de Rally",
+    "active": 1,
+    "imagen": "http://localhost:3000/img/bateria-2.png",
+    "id_categoria": 3
+}
 
 ###
-DELETE http://localhost:3000/api/productos/5 HTTP/1.1
+DELETE http://localhost:3000/api/productos/7 HTTP/1.1
 content-type: application/json

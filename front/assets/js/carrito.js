@@ -10,11 +10,10 @@ function obtenerCarritoDeStorage() {
 let botonContinuarCompra = document.getElementById('continuar-comprando');
 let botonFinalizarCompra = document.getElementById('finalizar-compra');
 botonContinuarCompra?.addEventListener('click', () => window.location.href = "/front/pages/productos.html");
-// botonFinalizarCompra?.addEventListener('click', () => window.location.href = "/front/pages/productos.html");
+// botonFinalizarCompra?.addEventListener('click', () => window.location.href = "/front/pages/ticket.html");
 
 export function cargarProductosEnCarrito(){
     const carrito = obtenerCarritoDeStorage();
-    console.log(carrito)    
 
     const listadoProductosEnCarrito = document.getElementById('listado-productos-en-carrito');
 
