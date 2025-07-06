@@ -10,7 +10,7 @@ export function obtenerNombreUsuario() {
 // productos.html
 function cargarMensaje(mensaje) {
     const label = document.getElementById("mensaje-bienvenida");
-    label.textContent = mensaje;
+    if(label) label.textContent = mensaje;
 }
 
 async function fetchProductos() {
@@ -80,7 +80,8 @@ async function cargarCategorias() {
     }
 
     let botonTodasCategorias = document.getElementById("todos-categoria");
-    botonTodasCategorias.addEventListener("click", () => filtrarPorCategoria("TODOS"));
+
+    if(botonTodasCategorias) botonTodasCategorias.addEventListener("click", () => filtrarPorCategoria("TODOS"));
 
 }
 
@@ -96,8 +97,10 @@ async function filtrarPorCategoria(categoria){
 
 async function init() {
     cargarMensaje(`Bienvenido ${obtenerNombreUsuario()}!`);
+
     let productos = await fetchProductos();
     cargarProductos(productos);
+    
     cargarCategorias();
     cargarCantidadEnHeader();
 }
