@@ -10,13 +10,13 @@ html.modo-oscuro-temporal body {
 }
 
 body {
-  font-family: 'Calibri', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
-}
+    font-family: 'Calibri', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    }
 
 
 body.modo-oscuro {
@@ -188,31 +188,6 @@ nav {
 }
 
 
-@media (max-width: 932px) {
-    #listado-productos {    
-        margin: auto 0px;
-    }
-}
-
-@media (max-width: 768px) {
-    #listado-productos {    
-        padding: 0px;
-        margin: 0px;
-
-    }
-
-    .producto-item {
-        max-width: 150px;
-        margin: 10px 0;
-    }
-
-    #categorias {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-}
-
 /* --------Seccion Carrito --------------*/
 
 .container-titulo-carrito {
@@ -276,10 +251,10 @@ nav {
 }
 
 .cantidad-producto {
-  min-width: 24px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1rem;
+    min-width: 24px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .container-botones-carrito {
@@ -305,10 +280,20 @@ nav {
     color: #fff;
 }
 
-.modo-icono{
-    width: 30px;
-    height: 30px;
+
+
+/* 
+.modo-oscuro,
+.modo-oscuro-temporal {
+    background-color: #1a1a1a;
+    color: #f9f9f9;
 }
+
+.modo-oscuro .nav-title,
+.modo-oscuro .a-nav,
+.modo-oscuro .alumnos p {
+    color: #f9f9f9;
+} */
 
 /* --------Switch modo --------------*/
 .toggle-contenedor {
@@ -350,4 +335,36 @@ nav {
 
 #modo-switch:checked + label::after {
     left: 32px;
+}
+.modo-icono{
+    width: 30px;
+    height: 30px;
+}
+
+
+
+
+@media (max-width: 932px) {
+    #listado-productos {    
+        margin: auto 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    #listado-productos {    
+        padding: 0px;
+        margin: 0px;
+
+    }
+
+    .producto-item {
+        max-width: 150px;
+        margin: 10px 0;
+    }
+
+    #categorias {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
 }
