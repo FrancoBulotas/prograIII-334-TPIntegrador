@@ -1,15 +1,11 @@
 
 import Products from "../models/productos.models.js";
-<<<<<<< HEAD
 import fs from "fs";
 import path from "path";
 
 // directorio donde multer guarda las imágenes (relativo a src/public)
 const UPLOADS_DIR = path.join(process.cwd(), "src", "public", "img");
 
-=======
-import env from "../config/environments.js";
->>>>>>> fa2fd8390aa4269d05142f6baa6b5eef160638ee
 
 export const getProductsList = async (req, res) => {
     try {
@@ -61,11 +57,7 @@ export const handleNewProduct = async (req, res) => {
       return res.status(400).send("La imagen es requerida");
     }
 
-<<<<<<< HEAD
-    const imagenPublica = `http://localhost:3000/img/${req.file.filename}`;
-=======
     const imagenPublica = `http://localhost:${env.port}/img/uploads/${req.file.filename}`;
->>>>>>> fa2fd8390aa4269d05142f6baa6b5eef160638ee
 
     await Products.insertNewProduct(
       nombre,
@@ -102,11 +94,7 @@ export const handleEditProduct = async (req, res) => {
     // si se subio nuevaimagen la usamos, si no, mantenemos la anterior
     let imagenPublica = producto.imagen;
     if (req.file) {
-<<<<<<< HEAD
-      imagenPublica = `/img/${req.file.filename}`;
-=======
       imagenPublica = `http://localhost:${env.port}/img/uploads/${req.file.filename}`;
->>>>>>> fa2fd8390aa4269d05142f6baa6b5eef160638ee
     }
     
     await Products.updateProduct(
