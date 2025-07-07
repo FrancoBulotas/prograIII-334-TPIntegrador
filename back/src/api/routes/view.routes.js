@@ -10,7 +10,11 @@ import {
 } from '../controllers/view.controllers.js';
 
 import multer from "multer";
+<<<<<<< HEAD
 const upload = multer({ dest: "src/public/img" });
+=======
+const upload = multer({ dest: "src/public/img/uploads" });
+>>>>>>> fa2fd8390aa4269d05142f6baa6b5eef160638ee
 
 const router = Router();
 
