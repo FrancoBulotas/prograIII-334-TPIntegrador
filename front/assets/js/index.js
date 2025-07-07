@@ -129,4 +129,34 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Cambiar los íconos según el modo
+const iconoSol = document.getElementById("icono-sol");
+const iconoLuna = document.getElementById("icono-luna");
+const modoSwitch = document.getElementById("modo-switch");
+
+
+function actualizarIconosModo(modo) {
+    if (modo === "oscuro") {
+        iconoSol.src = "/front/assets/images/solBlanco.png"; 
+        iconoLuna.src = "/front/assets/images/lunaBlanca.png";
+    } else {
+        iconoSol.src = "/front/assets/images/sol.png";
+        iconoLuna.src = "/front/assets/images/luna.png";
+    }
+}
+
+// Si esta en oscuro desde antes 
+if (localStorage.getItem("modoProductos") === "oscuro") {
+    actualizarIconosModo("oscuro");
+    modoSwitch.checked = true;
+}
+
+
+modoSwitch.addEventListener("change", () => {
+    const modoActual = document.documentElement.classList.toggle("modo-oscuro") ? "oscuro" : "claro";
+    localStorage.setItem("modoProductos", modoActual);
+    actualizarIconosModo(modoActual);
+});
+
+
 init(); 
