@@ -1,16 +1,25 @@
 
-import { Router } from "express";
+import { Router } from 'express';
+import {
+    getProductsList,
+    renderNewProductForm,
+    renderEditProductForm,
+    handleNewProduct,
+    handleEditProduct,
+    handleDeleteProduct
+} from '../controllers/view.controllers.js';
 
-import { getProductsList } from "../controllers/view.controllers.js";
+import multer from "multer";
+const upload = multer({ dest: "src/public/img" });
 
 const router = Router();
 
-router.get('/', getProductsList);
+router.get('/productos', getProductsList);
+router.post('/productos/nuevo', upload.single("imagen"), handleNewProduct);
+router.post('/productos/:id/editar', upload.single("imagen"), handleEditProduct);
+router.post('/productos/:id/eliminar', handleDeleteProduct);
 
-router.get('/productos', (req, res) => {
-    res.render('productos', {
-        title: 'AutoPartes Dashboard',
-    });
-});
+router.get('/productos/nuevo', renderNewProductForm);
+router.get('/productos/:id/editar', renderEditProductForm);
 
 export default router;

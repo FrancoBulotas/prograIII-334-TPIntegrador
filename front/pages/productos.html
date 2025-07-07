@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoPartes</title>
+    
+    <script>
+        if (localStorage.getItem("modoProductos") === "oscuro") {
+            document.documentElement.classList.add("modo-oscuro");
+    }
+    </script>
+
 
     <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
     <script type="module" src="../assets/js/index.js" defer></script>
@@ -15,7 +22,7 @@
         <div class="nav-container">
             <div class="nav-header">
                 <div class="nav-title">
-                    <img src="/front/assets/images/logo-autopartes.png" alt="Logo" class="logo-image">
+                    <img src="/front/assets/images/logo-autopartes.ico" alt="Logo" class="logo-image">
                     <h2>AutoPartes</h2>
                 </div>
                 <div class="alumnos">
@@ -52,7 +59,7 @@
             <input type="checkbox" id="modo-switch" >
             <label for="modo-switch" id="modo-label"></label>
 
-            <img src="/front/assets/images/luna.jpg" alt="Modo oscuro" id="icono-luna" class="modo-icono" />
+            <img src="/front/assets/images/luna.png" alt="Modo oscuro" id="icono-luna" class="modo-icono" />
         </div>
         
 

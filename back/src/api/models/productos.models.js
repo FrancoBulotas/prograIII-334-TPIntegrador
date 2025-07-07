@@ -9,7 +9,7 @@ const selectAllProducts = async () => {
 }
 
 const selectProductFromId = async (id) => {
-    let sql = `SELECT * FROM productos WHERE id = ?`;
+    let sql = `SELECT * FROM productos WHERE id_producto = ?`;
     
     return await connection.query(sql, [id]);
 }
