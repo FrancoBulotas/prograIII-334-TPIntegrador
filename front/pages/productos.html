@@ -35,7 +35,7 @@
                 <div><a class="a-nav" href="/front/pages/productos.html">Productos</a></div>
                 <div>
                     <a class="a-nav" href="./carrito.html">
-                        <img class="carrito-image" src="/front/assets/images/carrito-autopartes.png" alt="">
+                        <img class="carrito-image" src="/front/assets/images/carrito-autopartes.png" alt="" id="carrito-autopartes">
                         <span class="carrito-count" id="carrito-count"></span>
                     </a>
                 </div>            
@@ -58,11 +58,17 @@
         <div class="container-filtros">
             <h3>Categorias</h3>
             <div id="categorias">
-                <button class="boton-categoria" id="todos-categoria">TODAS</button>
+                <!-- <button class="boton-categoria" id="todos-categoria">TODAS</button> -->
             </div>
         </div>
 
         <div id="listado-productos"></div>
+
+        <div class="paginacion">
+            <button id="pagina-anterior" class="boton boton-secundario">« Anterior</button>
+            <span id="indicador-pagina">Página <span id="numero-pagina">1</span> de <span id="total-paginas">1</span></span>
+            <button id="pagina-siguiente" class="boton boton-secundario">Siguiente »</button>
+        </div>
     </main>
 </body>
 </html>

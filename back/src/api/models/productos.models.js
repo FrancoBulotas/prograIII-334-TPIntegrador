@@ -14,6 +14,25 @@ const selectProductFromId = async (id) => {
     return await connection.query(sql, [id]);
 }
 
+const selectProductosPaginados = async (limit, offset) => {
+  const sql = `SELECT * FROM productos LIMIT ? OFFSET ?`;
+  return await connection.query(sql, [limit, offset]);
+};
+
+const selectProductsFromCategoryId = async (id) => {
+    let sql = 'SELECT * FROM productos WHERE id_categoria = ?'
+    
+    return await connection.query(sql, [id]);
+}
+
+// Opcional: obtener el conteo total para calcular totalPages
+const countProductos = async () => {
+  const sql = `SELECT COUNT(*) AS total FROM productos`;
+  const [rows] = await connection.query(sql);
+  return rows[0].total;
+};
+
+
 const insertNewProduct = async (nombre, precio, descripcion, imagen, active, id_categoria) => {
     let sql = `INSERT INTO productos (nombre, precio, descripcion, imagen, active, id_categoria) VALUES (?, ?, ?, ?, ?, ?)`;
     
@@ -35,6 +54,9 @@ const deleteProduct = async (id) => {
 export default {
     selectAllProducts,
     selectProductFromId,
+    selectProductosPaginados,
+    selectProductsFromCategoryId,
+    countProductos,
     insertNewProduct,
     updateProduct,
     deleteProduct

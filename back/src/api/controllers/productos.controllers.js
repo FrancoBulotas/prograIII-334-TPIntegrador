@@ -12,10 +12,23 @@ import Products from "../models/productos.models.js";
 
 export const getAllProducts = async (req, res) => {
     try {
-        let [prods] = await Products.selectAllProducts();
+        const page  = Number(req.query.page)  || 1;
+        const limit = Number(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+
+        
+        const [prods] = await Products.selectProductosPaginados(limit, offset);
+        const totalItems = await Products.countProductos();
+        const totalPages = Math.ceil(totalItems / limit);
 
         res.status(200).json({ 
             payload: prods,
+            meta: {
+                totalItems,
+                totalPages,
+                currentPage: page,
+                perPage: limit
+            },
             message: prods.length === 0 ? "No se encontraron productos" : `${prods.length} Productos encontrados`
         })
     } catch (error) {
@@ -23,6 +36,27 @@ export const getAllProducts = async (req, res) => {
         res.status(500).json({ message: error });
     }
 };
+
+export const getProductsFromCategory = async (req, res) => {
+    try {
+        let { id } = req.params;
+
+        let [prods] = await Products.selectProductsFromCategoryId(id);
+        
+        if (prods.length === 0) {
+            return { status: 404, message: "Productos no encontrados" };
+        }
+
+        res.status(200).json({ 
+            message: "Productos encontrados",
+            payload: prods          
+        });
+
+    } catch (e){
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+}
 
 export const getProductById = async (req, res) => {
     try {
@@ -40,7 +74,7 @@ export const getProductById = async (req, res) => {
         });
     } catch (error) {   
         console.error(error);
-        return { status: 500, message: error }; 
+        res.status(500).json({ message: error });
     }
 };
 
