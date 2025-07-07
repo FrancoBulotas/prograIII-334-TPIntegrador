@@ -79,6 +79,18 @@
   cursor: pointer;
 }
 
+.modo-oscuro .nav-title {
+    color: #f9f9f9;
+}
+
+.modo-oscuro .a-nav {
+    color: #ccc;
+}
+
+.modo-oscuro .alumnos p {
+    color: #ccc;
+}
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -104,4 +116,5 @@
         flex-direction: row;
         gap: 10px;
     } */
+     
 }

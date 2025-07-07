@@ -104,36 +104,9 @@ async function init() {
     cargarCategorias();
     cargarCantidadEnHeader();
 }
-// //cambio de modo 
-// const contenedor = document.getElementById("modo-toggle");
-// const icono= document.getElementById("modo-icono");
 
-//     contenedor.addEventListener("click", () => {
-//         const oscuro = document.body.classList.toggle("modo-oscuro");
-
-//         // Cambiar estilo del contenedor
-//         contenedor.classList.toggle("dark", oscuro);
-
-//     // Cambiar imagen
-//     icono.src = oscuro ? "/front/assets/images/sol.png" : "/front/assets/images/luna.jpg";
-//     icono.alt = oscuro ? "Modo claro" : "Modo oscuro";
-
-//     // Guardar la preferencia en el navegador
-//     localStorage.setItem("modoProductos", oscuro ? "oscuro" : "claro");
-//     });
-
-//   // Al cargar la página, aplicá el modo guardado si había uno
-//     window.addEventListener("DOMContentLoaded", () => {
-//         if (localStorage.getItem("modoProductos") === "oscuro") {
-//             document.body.classList.add("modo-oscuro");
-//             contenedor.classList.add("dark");
-//             icono.src = "/front/assets/images/sol.png";
-//             icono.alt = "Modo claro";
-//         }
-//     });
 const switchModo = document.getElementById("modo-switch");
 const contenedor = document.getElementById("modo-toggle");
-const label = document.getElementById("modo-label");
 
 // Cambio de modo al hacer clic en el interruptor
 switchModo.addEventListener("change", () => {
@@ -143,18 +116,17 @@ switchModo.addEventListener("change", () => {
     document.body.classList.toggle("modo-oscuro", oscuro);
     contenedor.classList.toggle("dark", oscuro);
 
-    // Guardar la preferencia en el navegador
+    // 
     localStorage.setItem("modoProductos", oscuro ? "oscuro" : "claro");
 });
 
-// Al cargar la página, aplicar el modo guardado si había uno
+// Aplicar el modo oscuro si está guardado en el navegador
 window.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("modoProductos") === "oscuro") {
         document.body.classList.add("modo-oscuro");
         contenedor.classList.add("dark");
-        switchModo.checked = true; // Marcar el interruptor
+        switchModo.checked = true; 
     }
 });
-
 
 init(); 
