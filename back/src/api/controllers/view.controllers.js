@@ -4,18 +4,40 @@ import env from "../config/environments.js";
 
 export const getProductsList = async (req, res) => {
     try {
-        const q = req.query.q; 
+        const q = req.query.q   || "";      
+        const page = Number(req.query.page)  || 1; 
+        const limit = Number(req.query.limit) || 6;
+        const offset = (page - 1) * limit;
 
-        let [rows] = await Products.selectAllProducts();
-
+        // si hay busqueda por id, ignoramos paginación y hacemos filtro simple
         if (q) {
-            rows = rows.filter(p => p.id_producto === Number(q));
+          const idBuscado = Number(q);
+          const [todos] = await Products.selectAllProducts();
+          const filtrados = todos.filter(p => p.id_producto === idBuscado);
+
+          console.log(filtrados)
+          return res.render("index", {
+            title: "AutoPartes Dashboard",
+            products: filtrados,
+            q,
+            page: 1,
+            totalPages: 1,
+            limit
+          });
         }
+
+        // traemos pagina de productos
+        const [rows] = await Products.selectProductosPaginados(limit, offset);
+        const totalItems = await Products.countProductos();
+        const totalPages = Math.ceil(totalItems / limit);
 
         res.render('index', {
             title: 'AutoPartes Dashboard',
             products: rows,
-            message: rows.length === 0 ? "No se encontraron productos" : `${rows.length} Productos encontrados`
+            q: "",
+            page,
+            totalPages,
+            limit
         });
     } catch (error) {
         console.error(error);

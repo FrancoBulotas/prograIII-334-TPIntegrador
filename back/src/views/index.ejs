@@ -88,6 +88,39 @@
           <% }) %>
         </tbody>
       </table>
+
+      <% if(products.length === 0) { %>
+        <div class="producto-sin-coincidencia">
+          No hay un producto con el ID seleccionado
+        </div>
+      <% } else { %>
+        <!------ paginacion ------>
+        <div class="paginacion">
+          <% if (page > 1) { %>
+            <button class="boton boton-secundario">
+              <a
+                href="?page=<%= page-1 %>&limit=<%= limit %><% if(q) { %>&q=<%= q %><% } %>"
+                class="elemento-a"
+              >
+                « Anterior
+              </a>
+            </button>
+          <% } %>
+
+          <span>Página <%= page %> de <%= totalPages %></span>
+
+          <% if (page < totalPages) { %>
+            <button class="boton boton-secundario">
+              <a
+                href="?page=<%= page+1 %>&limit=<%= limit %><% if(q) { %>&q=<%= q %><% } %>"
+                class="elemento-a"
+              >
+                Siguiente »
+              </a>
+            </button>
+          <% } %>
+        </div>
+      <% }  %>
     </main>
 
     <%- include('partials/footer.ejs') %>
