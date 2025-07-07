@@ -1,9 +1,26 @@
 
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --color-principal: #007bff;
+  --color-secundario: #6c757d;
+  --fondo-pagina: #f8f9fa;
+  --texto: #212529;
+  --blanco: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Calibri', sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: 'Inter', sans-serif;
+  /* background-color: var(--fondo-pagina); */
+  color: var(--texto);
+  line-height: 1.6;
 }
 
 nav {
@@ -20,68 +37,138 @@ nav {
 }
 
 
-#listado-productos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
-    margin: auto 200px;
-    gap: 5px;
+.contenedor {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2rem auto;
 }
 
-.producto-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    text-align: left;
-    display: inline-block;
-    max-width: 200px;
+/* Titulos */
+.titulo {
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-.producto-item img {
-    width: 100%;
-    height: auto;
+/* Botones */
+.boton {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.boton-primario {
+  background-color: var(--color-principal);
+  color: var(--blanco);
+}
+.boton-primario:hover {
+  background-color: #0056b3;
+}
+.boton-secundario {
+  background-color: var(--color-secundario);
+  color: var(--blanco);
+}
+.boton-secundario:hover {
+  background-color: #5a6268;
 }
 
-.producto-item h3 {    
-    margin: 10px 0;
+.elemento-a {
+    text-decoration: none;
+    color: #fff;
 }
 
-.producto-item p {
-    margin: 5px 0;
+/* Buscador */
+.buscador {
+  display: flex;
+  /* flex-wrap: wrap; */
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.buscador label {
+  font-weight: 500;
+}
+.buscador input[type="number"] {
+  width: 10rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
 }
 
-.boton-agregar-carrito {
-    background-color: #3178FF; 
-    color: white;
-    padding: 8px 10px;
+/* Tabla de productos */
+.tabla-productos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+.tabla-productos th,
+.tabla-productos td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+.tabla-productos th {
+  background-color: var(--blanco);
+  font-weight: 600;
+}
+.imagen-producto{
+  width: 60px;
+  border-radius: 0.25rem;
+}
+
+.boton-acciones {
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
+}
+
+.imagen-acciones {
+    width: 25px;
+    height: 25px;
     cursor: pointer;
-    width: 100%;
-    transition: 0.3s ease;
+    /* transition: 0.3 ease; */
 }
 
-.boton-agregar-carrito:hover {
-    background-color: #2457b6; 
+.imagen-acciones:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
 }
 
-
-@media (max-width: 932px) {
-    #listado-productos {    
-        margin: auto 0px;
-    }
+/* Formularios de creación/edición */
+.formulario-producto {
+  background-color: var(--blanco);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+.campo-producto {
+  margin-bottom: 1rem;
+}
+.campo-producto label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.campo-producto input[type="text"],
+.campo-producto input[type="number"],
+.campo-producto textarea,
+.campo-producto select,
+.campo-producto input[type="file"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
 }
 
+/* Responsive mobile */
 @media (max-width: 768px) {
-    #listado-productos {    
-        padding: 0px;
-        margin: 0px;
-
-    }
-
-    .producto-item {
-        max-width: 150px;
-        margin: 10px 0;
-    }
+  .buscador {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tabla-productos th, .tabla-productos td {
+    padding: 0.5rem;
+  }
 }
