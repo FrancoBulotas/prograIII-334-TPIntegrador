@@ -1,11 +1,6 @@
 
 import Products from "../models/productos.models.js";
-import fs from "fs";
-import path from "path";
-
-// directorio donde multer guarda las imágenes (relativo a src/public)
-const UPLOADS_DIR = path.join(process.cwd(), "src", "public", "img");
-
+import env from "../config/environments.js";
 
 export const getProductsList = async (req, res) => {
     try {
