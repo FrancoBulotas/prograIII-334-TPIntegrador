@@ -300,8 +300,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: #000 1px solid;
-    margin-top: 0px;
+    margin-right: 20px;
 }
 
 #modo-switch {

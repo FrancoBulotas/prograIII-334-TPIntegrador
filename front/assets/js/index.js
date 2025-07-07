@@ -109,7 +109,7 @@ const switchModo = document.getElementById("modo-switch");
 const contenedor = document.getElementById("modo-toggle");
 
 // Cambio de modo al hacer clic en el interruptor
-switchModo.addEventListener("change", () => {
+switchModo?.addEventListener("change", () => {
     const oscuro = switchModo.checked; // El estado del interruptor
 
     // Cambiar el modo oscuro
