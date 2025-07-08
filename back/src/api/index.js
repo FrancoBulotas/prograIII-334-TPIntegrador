@@ -6,10 +6,6 @@ import { productosRouter, viewRouter, categoriasRouter, ventasRouter } from './r
 import authRouter from './controllers/auth.js';
 import { __dirname, join } from './utils/index.js';
 
-// import env from './config/environments.js';
-
-// const PORT = env.port;
-
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -31,11 +27,5 @@ app.use("/api/auth", authRouter);
 
 // rutas de la aplicacion ejs //
 app.use('/dashboard', viewRouter);
-
-
-
-// app.listen(PORT, () => {
-//   console.log(`Servidor local corriendo en puerto ${PORT}`);
-// });
 
 export default app;

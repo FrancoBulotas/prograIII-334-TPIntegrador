@@ -8,10 +8,9 @@ import {
     handleEditProduct,
     handleDeleteProduct
 } from '../controllers/view.controllers.js';
-
 import multer from "multer";
-const upload = multer({ dest: "src/public/img/uploads" });
 
+const upload = multer({ storage: multer.memoryStorage() });
 const router = Router();
 
 router.get('/productos', getProductsList);

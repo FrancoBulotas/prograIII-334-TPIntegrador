@@ -1,6 +1,5 @@
 
 import Products from "../models/productos.models.js";
-import env from "../config/environments.js";
 
 export const getProductsList = async (req, res) => {
     try {
