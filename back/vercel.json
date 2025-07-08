@@ -1,15 +1,18 @@
 
 {
   "version": 2,
-  "functions": {
-    "src/api/index.js": {
-      "runtime": "@vercel/node",
-      "includeFiles": "src/api/views/**/*.ejs"
+  "builds": [
+    {
+      "src": "src/api/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "src/api/views/**/*.ejs"
+      }
     }
-  },
+  ],
   "routes": [
-    { "src": "/api/(.*)",       "dest": "src/api/index.js" },
-    { "src": "/dashboard/(.*)", "dest": "src/api/index.js" },
-    { "src": "/public/(.*)",    "dest": "src/api/public/$1" }
+    { "src": "/api/(.*)",       "dest": "/src/api/index.js" },
+    { "src": "/dashboard/(.*)", "dest": "/src/api/index.js" },
+    { "src": "/public/(.*)",    "dest": "/src/api/public/$1" }
   ]
 }
