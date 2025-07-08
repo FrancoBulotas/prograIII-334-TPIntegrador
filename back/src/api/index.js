@@ -9,8 +9,8 @@ import { __dirname, join } from './utils/index.js';
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', join(__dirname, '../views'));
-app.use(express.static(join(__dirname, '../public')));
+app.set('views', join(__dirname, 'views'));
+app.use(express.static(join(__dirname, 'public')));
 
 // Middlewares de aplicacion //
 app.use(express.json()); 
