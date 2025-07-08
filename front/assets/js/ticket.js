@@ -1,5 +1,6 @@
 
 import { obtenerCarritoDeStorage, vaciarCarrito } from './carrito.js'; // asume algunas utilidades
+import { API_BASE_URL } from './apiConfig.js'; 
 
 export async function generarTicket() {
   // obtenemos datos del carrito y del usuario
@@ -13,7 +14,7 @@ export async function generarTicket() {
 
   try {
     // POST /api/ventas
-    const ventaRes = await fetch('http://localhost:3000/api/ventas', {
+    const ventaRes = await fetch(`${API_BASE_URL}/api/ventas`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cliente, total })
@@ -27,7 +28,7 @@ export async function generarTicket() {
 
     // POST detalle de cada item
     for (const item of carrito) {
-      await fetch('http://localhost:3000/api/ventas/detalle', {
+      await fetch(`${API_BASE_URL}/api/ventas/detalle`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -61,8 +62,8 @@ async function cargarTicket() {
 
   try {
     const [ventaRes, detalleRes] = await Promise.all([
-      fetch(`http://localhost:3000/api/ventas/${idVenta}`),
-      fetch(`http://localhost:3000/api/ventas/detalle/${idVenta}`)
+      fetch(`${API_BASE_URL}/api/ventas/${idVenta}`),
+      fetch(`${API_BASE_URL}/api/ventas/detalle/${idVenta}`)
     ]);
     if (!ventaRes.ok || !detalleRes.ok) throw new Error();
 

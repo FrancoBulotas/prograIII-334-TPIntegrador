@@ -1,7 +1,7 @@
 
 
 import { redirigirACarrito, cargarCantidadEnHeader } from './carrito.js';
-
+import { API_BASE_URL } from './apiConfig.js';
 
 export function obtenerNombreUsuario() {
     return localStorage.getItem("nombreUsuario");
@@ -22,7 +22,7 @@ let paginaActual = 1;
 const limite = 6; // productos por pagina
 
 async function fetchProductos(page = 1) {
-    const response = await fetch(`http://localhost:3000/api/productos?page=${page}&limit=${limite}`);
+    const response = await fetch(`${API_BASE_URL}/api/productos?page=${page}&limit=${limite}`);
     return await response.json();
 }
 
@@ -77,7 +77,7 @@ btnNext?.addEventListener("click", () => {
 });
 
 async function cargarCategorias() {
-    const response = await fetch('http://localhost:3000/api/categorias');
+    const response = await fetch(`${API_BASE_URL}/api/categorias`);
     const categorias = await response.json();
 
     
@@ -111,12 +111,15 @@ async function cargarCategorias() {
 
 async function filtrarPorCategoria(categoria) {    
     let data;
+    const divPaginacion = document.getElementById("paginacion");
     if(categoria === "TODOS") {
         data = await fetchProductos(paginaActual);
+        divPaginacion.style.display = "flex";
     }
     else {
-        const res = await fetch(`http://localhost:3000/api/productos/categoria/${categoria.id_categoria}`);
+        const res = await fetch(`${API_BASE_URL}/api/productos/categoria/${categoria.id_categoria}`);
         data = await res.json();
+        divPaginacion.style.display = "none";
     }
 
     cargarProductos(data);
