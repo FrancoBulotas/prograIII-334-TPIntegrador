@@ -7,12 +7,9 @@
       "use": "@vercel/node"
     }
   ],
-  "functions": {
+ "functions": {
     "src/api/index.js": {
-      "includeFiles": [
-        "src/api/views/**/*.ejs",
-        "src/api/public/**/*"
-      ]
+      "includeFiles": "src/api/views/**/*.ejs"
     }
   },
   "routes": [
