@@ -111,12 +111,15 @@ async function cargarCategorias() {
 
 async function filtrarPorCategoria(categoria) {    
     let data;
+    let paginacionDiv = document.getElementById("paginacion");
     if(categoria === "TODOS") {
         data = await fetchProductos(paginaActual);
+        paginacionDiv.style.display = "flex";
     }
     else {
         const res = await fetch(`http://localhost:3000/api/productos/categoria/${categoria.id_categoria}`);
         data = await res.json();
+        paginacionDiv.style.display = "none";
     }
 
     cargarProductos(data);
