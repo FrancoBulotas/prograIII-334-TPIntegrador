@@ -1,9 +1,6 @@
 
-import { Router } from "express";
-import connection  from '../database/db.js';
+import Venta from "../models/ventas.models.js"
 import { DateTime } from "luxon";
-
-const router = Router();
 
 // ventas:
 // [DONE] -	GET /ventas * 		    -> en este la idea es que se tome el carrito y se separe en prods y se agreguen en la tabla detalleVenta
@@ -22,11 +19,9 @@ const router = Router();
 
 // * hace referencia a los endpoints que necesitas autenticacion de admin (todavia no implementado) 
 
-router.get("/", async (req, res) => {
-    let sql = `SELECT * FROM ventas`;
-
+export const getAllSales = async (req, res) => {
     try {
-        let [rows] = await connection.query(sql);
+        let [rows] = await Venta.selectAllSales();
 
         // convertimos fechas a hora local de Buenos Aires (solo para mostrarse en el frontend, ya que en la base se guardan bien)
         // sin hacer esto la hora se para en UTC y no se ve bien en el frontend
@@ -46,19 +41,14 @@ router.get("/", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error, ok: false });
     }
-});
+}
 
-router.get("/:id", async (req, res) => {
-    let { id } = req.params;
 
-    let sql = `SELECT * FROM ventas WHERE id_venta = ?`;
-
+export const selectSaleById = async (req, res) => {
     try {
-        if (!id) {
-            return res.status(400).json({ message: "El ID es requerido" });
-        }
+        let { id } = req.params;
 
-        let [row] = await connection.query(sql, [id]);
+        let [row] = await Venta.selectSaleById(id);
 
         if (row.length === 0) {
             return res.status(404).json({ message: "Venta no encontrada" });
@@ -69,23 +59,18 @@ router.get("/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error, ok: false });
     }
-});
+}
 
-router.post("/", async (req, res) => {
-    let { cliente, total } = req.body;
 
-    let sql = `INSERT INTO ventas (cliente, fecha, total) VALUES (?, ?, ?)`;
-
+export const createSale = async (req, res) => {
     try {
+        let { cliente, total } = req.body;
+
         if (!cliente || !total) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
         }
 
-        let fecha = DateTime.now()
-            .setZone("America/Argentina/Buenos_Aires")
-            .toFormat("yyyy-MM-dd HH:mm:ss");
-
-        let [result] = await connection.query(sql, [cliente, fecha, total]);
+        let [result] = await Venta.insertNewSale(cliente, total);
 
         res.status(201).json({ 
             message: "Venta registrada exitosamente",
@@ -96,13 +81,11 @@ router.post("/", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error, ok: false });
     }
-});
+}
 
-router.get("/obtener/detalle", async (req, res) => {
-    let sql = `SELECT * FROM detalleVenta`;
-
+export const getSalesDetails = async (req, res) => {
     try {
-        let [rows] = await connection.query(sql);
+        let [rows] = await Venta.selectAllSalesDetails();
 
         res.status(200).json({ 
             payload: rows,
@@ -113,19 +96,12 @@ router.get("/obtener/detalle", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error, ok: false });
     }
-});
+} 
 
-router.get("/detalle/:id", async (req, res) => {
-    let { id } = req.params;
-
-    let sql = `SELECT * FROM detalleVenta WHERE id_venta = ?`;
-
+export const getSaleDetailById = async (req, res) => {    
     try {
-        if (!id) {
-            return res.status(400).json({ message: "El ID es requerido" });
-        }
-
-        let [row] = await connection.query(sql, [id]);
+        let { id } = req.params;
+        let [row] = await Venta.selectSalesDetailsById(id);
 
         if (row.length === 0) {
             return res.status(404).json({ message: "Detalle de venta no encontrado" });
@@ -136,19 +112,17 @@ router.get("/detalle/:id", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error, ok: false });
     }
-}); 
+}
 
-router.post("/detalle", async (req, res) => {
-    let { id_venta, id_producto, cantidad, nombre, precio_unitario } = req.body;
-
-    let sql = `INSERT INTO detalleVenta (id_venta, id_producto, cantidad, nombre, precio_unitario) VALUES (?, ?, ?, ?, ?)`;
+export const createSaleDetail = async (req, res) => {
+    let { id_venta, id_producto, cantidad, nombre, precio_unitario } = req.body;    
 
     try {
         if (!id_venta || !id_producto || !cantidad || !nombre || !precio_unitario) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
         }
 
-        let [result] = await connection.query(sql, [id_venta, id_producto, cantidad, nombre, precio_unitario]);
+        let [result] = await Venta.insertNewSaleDetail(id_venta, id_producto, cantidad, nombre, precio_unitario);
 
         res.status(201).json({ 
             message: "Detalle de venta registrado exitosamente",
@@ -159,6 +133,5 @@ router.post("/detalle", async (req, res) => {
         console.error(error);
         res.status(500).json({ message: error, ok: false });
     }
-});
+}
 
-export default router;

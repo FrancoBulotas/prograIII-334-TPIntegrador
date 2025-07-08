@@ -6,10 +6,8 @@ import cors from 'cors';
 
 import middlewares from './src/api/middlewares/middlewares.js';
 
-import { productosRouter, viewRouter, categoriasRouter } from './src/api/routes/index.js';
+import { productosRouter, viewRouter, categoriasRouter, ventasRouter } from './src/api/routes/index.js';
 
-
-import ventasRouter from './src/api/controllers/ventas.js';
 import authRouter from './src/api/controllers/auth.js';
 
 import { __dirname, join } from './src/api/utils/index.js';
