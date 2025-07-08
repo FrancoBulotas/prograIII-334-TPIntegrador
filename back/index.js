@@ -1,13 +1,9 @@
 
 import express from 'express';
 import cors from 'cors';
-
 import middlewares from './src/api/middlewares/middlewares.js';
-
 import { productosRouter, viewRouter, categoriasRouter, ventasRouter } from './src/api/routes/index.js';
-
 import authRouter from './src/api/controllers/auth.js';
-
 import { __dirname, join } from './src/api/utils/index.js';
 
 const app = express();
