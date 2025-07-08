@@ -342,7 +342,51 @@ nav {
 }
 
 
+/* -------- paginación -------- */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
 
+.paginacion span {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.paginacion .boton {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.1s;
+  cursor: pointer;
+}
+
+.paginacion .boton-secundario {
+  background-color: #6c757d;     
+  color: #fff;
+  border: none;
+}
+.paginacion .boton-secundario:hover:not(:disabled) {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
+.paginacion .boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 480px) {
+  .paginacion {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
 
 @media (max-width: 932px) {
     #listado-productos {    

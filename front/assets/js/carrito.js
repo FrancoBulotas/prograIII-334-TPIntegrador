@@ -1,16 +1,22 @@
 
+import { generarTicket } from "./ticket.js";
+
 function guardarCarritoEnStorage(carrito) {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
 }
-function obtenerCarritoDeStorage() {
+export function obtenerCarritoDeStorage() {
     return JSON.parse(localStorage.getItem("carrito")) || [];
+}
+
+export function vaciarCarrito() {
+    localStorage.removeItem("carrito");
 }
 
 let botonContinuarCompra = document.getElementById('continuar-comprando');
 let botonFinalizarCompra = document.getElementById('finalizar-compra');
 botonContinuarCompra?.addEventListener('click', () => window.location.href = "/front/pages/productos.html");
-// botonFinalizarCompra?.addEventListener('click', () => window.location.href = "/front/pages/ticket.html");
+botonFinalizarCompra?.addEventListener('click', () => generarTicket());
 
 export function cargarProductosEnCarrito(){
     const carrito = obtenerCarritoDeStorage();

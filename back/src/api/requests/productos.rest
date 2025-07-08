@@ -1,6 +1,6 @@
 
 
-GET http://localhost:3000/api/productos/ HTTP/1.1
+GET http://localhost:3000/api/productos?page=1&limit=5 HTTP/1.1
 content-type: application/json
 ###
 POST http://localhost:3000/api/productos HTTP/1.1

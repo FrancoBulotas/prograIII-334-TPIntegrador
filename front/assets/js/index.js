@@ -13,8 +13,16 @@ function cargarMensaje(mensaje) {
     if(label) label.textContent = mensaje;
 }
 
-async function fetchProductos() {
-    const response = await fetch('http://localhost:3000/api/productos');
+const btnPrev = document.getElementById("pagina-anterior");
+const btnNext = document.getElementById("pagina-siguiente");
+const spanPagina = document.getElementById("numero-pagina");
+const spanTotal = document.getElementById("total-paginas");
+
+let paginaActual = 1;
+const limite = 6; // productos por pagina
+
+async function fetchProductos(page = 1) {
+    const response = await fetch(`http://localhost:3000/api/productos?page=${page}&limit=${limite}`);
     return await response.json();
 }
 
@@ -48,12 +56,33 @@ async function cargarProductos(productos) {
     }
 }
 
+async function actualizarListado(page = 1) {
+    const data = await fetchProductos(page);
+    await cargarProductos(data);
+
+    // actualizar paginación
+    paginaActual = data.meta.currentPage;
+    spanPagina.textContent = paginaActual;
+    spanTotal.textContent = data.meta.totalPages;
+    btnPrev.disabled = paginaActual <= 1;
+    btnNext.disabled = paginaActual >= data.meta.totalPages;
+}
+
+btnPrev?.addEventListener("click", () => {
+    if (paginaActual > 1) actualizarListado(paginaActual - 1);
+});
+
+btnNext?.addEventListener("click", () => {
+    actualizarListado(paginaActual + 1);
+});
+
 async function cargarCategorias() {
     const response = await fetch('http://localhost:3000/api/categorias');
     const categorias = await response.json();
 
     
     const listadoCategorias = document.getElementById('categorias');
+    listadoCategorias.innerHTML = `<button class="boton-categoria" id="todos-categoria">TODAS</button>`;
 
     if (listadoCategorias) {
         // listadoCategorias.innerHTML = "";
@@ -61,48 +90,36 @@ async function cargarCategorias() {
         // categoriaDiv.classList.add('categoria');
 
         categorias.payload.forEach(categoria => {
-            const categoriaDiv = document.createElement('div');
-            categoriaDiv.classList.add('categoria');
+            const categoriaBoton = document.createElement('button');
+            categoriaBoton.classList.add('boton-categoria');
 
-            categoriaDiv.innerHTML += `
-                <div class="categoria-item">
-                    <button class="boton-categoria" id="categoria-${categoria.id_categoria}">${categoria.nombre.toUpperCase()}</button>
-                </div>
-            `;
+            categoriaBoton.id = `categoria-${categoria.id_categoria}`;
+            categoriaBoton.textContent = categoria.nombre.toUpperCase();
 
-            listadoCategorias.appendChild(categoriaDiv);
+            listadoCategorias.appendChild(categoriaBoton);
+            categoriaBoton.addEventListener("click", () => filtrarPorCategoria(categoria));
         });
 
-        categorias.payload.forEach(categoria => {
-            let botonCategoria = document.getElementById(`categoria-${categoria.id_categoria}`);
-            botonCategoria.addEventListener("click", () => filtrarPorCategoria(categoria));
-        });
+        document.getElementById("todos-categoria").addEventListener("click", () => actualizarListado(1));
     }
 
     let botonTodasCategorias = document.getElementById("todos-categoria");
 
-    if(botonTodasCategorias) botonTodasCategorias.addEventListener("click", () => filtrarPorCategoria("TODOS"));
+    if(botonTodasCategorias) botonTodasCategorias.addEventListener("click", () => filtrarPorCategoria("TODOS")); 
 
 }
 
-async function filtrarPorCategoria(categoria){
-    const productos = await fetchProductos();
-    
-    let productosActualizados = [...productos.payload];
+async function filtrarPorCategoria(categoria) {    
+    let data;
+    if(categoria === "TODOS") {
+        data = await fetchProductos(paginaActual);
+    }
+    else {
+        const res = await fetch(`http://localhost:3000/api/productos/categoria/${categoria.id_categoria}`);
+        data = await res.json();
+    }
 
-    if(categoria != "TODOS") productosActualizados = productosActualizados.filter(item => item.id_categoria === categoria.id_categoria);
-
-    cargarProductos({ payload: productosActualizados });
-}
-
-async function init() {
-    cargarMensaje(`Bienvenido ${obtenerNombreUsuario()}!`);
-
-    let productos = await fetchProductos();
-    cargarProductos(productos);
-    
-    cargarCategorias();
-    cargarCantidadEnHeader();
+    cargarProductos(data);
 }
 
 const switchModo = document.getElementById("modo-switch");
@@ -130,6 +147,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // Cambiar los íconos según el modo
+const iconoCarrito = document.getElementById("carrito-autopartes");
 const iconoSol = document.getElementById("icono-sol");
 const iconoLuna = document.getElementById("icono-luna");
 const modoSwitch = document.getElementById("modo-switch");
@@ -139,9 +157,11 @@ function actualizarIconosModo(modo) {
     if (modo === "oscuro") {
         iconoSol.src = "/front/assets/images/solBlanco.png"; 
         iconoLuna.src = "/front/assets/images/lunaBlanca.png";
+        iconoCarrito.src = "/front/assets/images/carritoBlanco-autopartes.png";
     } else {
         iconoSol.src = "/front/assets/images/sol.png";
         iconoLuna.src = "/front/assets/images/luna.png";
+        iconoCarrito.src = "/front/assets/images/carrito-autopartes.png";
     }
 }
 
@@ -152,11 +172,24 @@ if (localStorage.getItem("modoProductos") === "oscuro") {
 }
 
 
-modoSwitch.addEventListener("change", () => {
+modoSwitch?.addEventListener("change", () => {
     const modoActual = document.documentElement.classList.toggle("modo-oscuro") ? "oscuro" : "claro";
     localStorage.setItem("modoProductos", modoActual);
     actualizarIconosModo(modoActual);
 });
 
+
+async function init() {
+    cargarMensaje(`Bienvenido ${obtenerNombreUsuario()}!`);
+
+    let productos = await fetchProductos();
+    cargarProductos(productos);
+    
+    if (window.location.pathname.endsWith('productos.html')) {
+        await actualizarListado(1);
+        cargarCategorias();
+    }
+    cargarCantidadEnHeader();
+}
 
 init(); 
