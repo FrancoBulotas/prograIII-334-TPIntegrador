@@ -36,8 +36,7 @@ const insertNewSaleDetail = async (id_venta, id_producto, cantidad, nombre, prec
     let sql = `INSERT INTO detalleVenta (id_venta, id_producto, cantidad, nombre, precio_unitario) VALUES (?, ?, ?, ?, ?)`;
     return await connection.query(sql, [id_venta, id_producto, cantidad, nombre, precio_unitario]);
 }
-
-
+ 
 export default {
     selectAllSales,
     selectSaleById,
