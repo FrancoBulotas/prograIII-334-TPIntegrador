@@ -13,7 +13,6 @@ function cargarMensaje(mensaje) {
     if(label) label.textContent = mensaje;
 }
 
-const listadoProductos = document.getElementById('listado-productos');
 const btnPrev = document.getElementById("pagina-anterior");
 const btnNext = document.getElementById("pagina-siguiente");
 const spanPagina = document.getElementById("numero-pagina");
@@ -69,11 +68,11 @@ async function actualizarListado(page = 1) {
     btnNext.disabled = paginaActual >= data.meta.totalPages;
 }
 
-btnPrev.addEventListener("click", () => {
+btnPrev?.addEventListener("click", () => {
     if (paginaActual > 1) actualizarListado(paginaActual - 1);
 });
 
-btnNext.addEventListener("click", () => {
+btnNext?.addEventListener("click", () => {
     actualizarListado(paginaActual + 1);
 });
 
@@ -121,17 +120,6 @@ async function filtrarPorCategoria(categoria) {
     }
 
     cargarProductos(data);
-}
-
-async function init() {
-    cargarMensaje(`Bienvenido ${obtenerNombreUsuario()}!`);
-
-    let productos = await fetchProductos();
-    cargarProductos(productos);
-    await actualizarListado(1);
-
-    cargarCategorias();
-    cargarCantidadEnHeader();
 }
 
 const switchModo = document.getElementById("modo-switch");
@@ -184,11 +172,24 @@ if (localStorage.getItem("modoProductos") === "oscuro") {
 }
 
 
-modoSwitch.addEventListener("change", () => {
+modoSwitch?.addEventListener("change", () => {
     const modoActual = document.documentElement.classList.toggle("modo-oscuro") ? "oscuro" : "claro";
     localStorage.setItem("modoProductos", modoActual);
     actualizarIconosModo(modoActual);
 });
 
+
+async function init() {
+    cargarMensaje(`Bienvenido ${obtenerNombreUsuario()}!`);
+
+    let productos = await fetchProductos();
+    cargarProductos(productos);
+    
+    if (window.location.pathname.endsWith('productos.html')) {
+        await actualizarListado(1);
+        cargarCategorias();
+    }
+    cargarCantidadEnHeader();
+}
 
 init(); 

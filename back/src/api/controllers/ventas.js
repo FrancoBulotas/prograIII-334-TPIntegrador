@@ -39,11 +39,12 @@ router.get("/", async (req, res) => {
 
         res.status(200).json({ 
             payload: rows,
-            message: rows.length === 0 ? "No se encontraron ventas" : `${rows.length} Ventas encontradas`
+            message: rows.length === 0 ? "No se encontraron ventas" : `${rows.length} Ventas encontradas`,
+            ok: true
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error, ok: false });
     }
 });
 
@@ -63,10 +64,10 @@ router.get("/:id", async (req, res) => {
             return res.status(404).json({ message: "Venta no encontrada" });
         }
 
-        res.status(200).json({ payload: row });
+        res.status(200).json({ payload: row, ok: true });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error, ok: false });
     }
 });
 
@@ -88,11 +89,12 @@ router.post("/", async (req, res) => {
 
         res.status(201).json({ 
             message: "Venta registrada exitosamente",
-            payload: { id_venta: result.insertId }
+            payload: { id_venta: result.insertId },
+            ok: true
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error, ok: false });
     }
 });
 
@@ -104,11 +106,12 @@ router.get("/obtener/detalle", async (req, res) => {
 
         res.status(200).json({ 
             payload: rows,
-            message: rows.length === 0 ? "No se encontraron detalles de ventas" : `${rows.length} Detalles de ventas encontrados`
+            message: rows.length === 0 ? "No se encontraron detalles de ventas" : `${rows.length} Detalles de ventas encontrados`,
+            ok: true
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error, ok: false });
     }
 });
 
@@ -128,32 +131,33 @@ router.get("/detalle/:id", async (req, res) => {
             return res.status(404).json({ message: "Detalle de venta no encontrado" });
         }
 
-        res.status(200).json({ payload: row });
+        res.status(200).json({ payload: row, ok: true });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error, ok: false });
     }
 }); 
 
 router.post("/detalle", async (req, res) => {
-    let { id_venta, id_producto, cantidad, precio_unitario } = req.body;
+    let { id_venta, id_producto, cantidad, nombre, precio_unitario } = req.body;
 
-    let sql = `INSERT INTO detalleVenta (id_venta, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)`;
+    let sql = `INSERT INTO detalleVenta (id_venta, id_producto, cantidad, nombre, precio_unitario) VALUES (?, ?, ?, ?, ?)`;
 
     try {
-        if (!id_venta || !id_producto || !cantidad || !precio_unitario) {
+        if (!id_venta || !id_producto || !cantidad || !nombre || !precio_unitario) {
             return res.status(400).json({ message: "Todos los campos son requeridos" });
         }
 
-        let [result] = await connection.query(sql, [id_venta, id_producto, cantidad, precio_unitario]);
+        let [result] = await connection.query(sql, [id_venta, id_producto, cantidad, nombre, precio_unitario]);
 
         res.status(201).json({ 
             message: "Detalle de venta registrado exitosamente",
-            payload: { id_detalle: result.insertId }
+            payload: { id_detalle: result.insertId },
+            ok: true
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error, ok: false });
     }
 });
 

@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoPartes</title>
-    
+
+    <!-- Aplica modo oscuro temporal ANTES de que cargue la página -->
     <script>
         if (localStorage.getItem("modoProductos") === "oscuro") {
-                document.documentElement.classList.add("modo-oscuro");
-        }
-    </script>
+        document.documentElement.classList.add("modo-oscuro-temporal");
+    }
 
+    </script>
     <link rel="shortcut icon" href="../assets/images/logo-autopartes.ico" type="image/x-icon"> 
     <script type="module" src="../assets/js/index.js" defer></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/ticket.css">
+    
 </head>
 <body>
     <nav role="navigation">
@@ -43,33 +46,8 @@
         </div>
     </nav>
 
-    <main>
-        <div class="container-mensaje-bienvenida">
-            <div id="modo-toggle" class="toggle-contenedor">
-                <img src="/front/assets/images/sol.png" alt="Modo claro" id="icono-sol" class="modo-icono" />
-
-                <input type="checkbox" id="modo-switch" >
-                <label for="modo-switch" id="modo-label"></label>
-
-                <img src="/front/assets/images/luna.png" alt="Modo oscuro" id="icono-luna" class="modo-icono" />
-            </div>
-            <h3 for="text" id="mensaje-bienvenida"></h3>
-        </div>
-        <div class="container-filtros">
-            <h3>Categorias</h3>
-            <div id="categorias">
-                <!-- <button class="boton-categoria" id="todos-categoria">TODAS</button> -->
-            </div>
-        </div>
-
-        <div id="listado-productos"></div>
-
-        <div class="paginacion">
-            <button id="pagina-anterior" class="boton boton-secundario">« Anterior</button>
-            <span id="indicador-pagina">Página <span id="numero-pagina">1</span> de <span id="total-paginas">1</span></span>
-            <button id="pagina-siguiente" class="boton boton-secundario">Siguiente »</button>
-        </div>
+    <main class="contenedor">
+        <div id="ticket">Cargando ticket…</div>
     </main>
 </body>
 </html>
-
