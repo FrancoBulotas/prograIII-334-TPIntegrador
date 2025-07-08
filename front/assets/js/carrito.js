@@ -15,7 +15,7 @@ export function vaciarCarrito() {
 
 let botonContinuarCompra = document.getElementById('continuar-comprando');
 let botonFinalizarCompra = document.getElementById('finalizar-compra');
-botonContinuarCompra?.addEventListener('click', () => window.location.href = "/front/pages/productos.html");
+botonContinuarCompra?.addEventListener('click', () => window.location.href = "../pages/productos.html");
 botonFinalizarCompra?.addEventListener('click', () => generarTicket());
 
 export function cargarProductosEnCarrito(){
@@ -29,7 +29,7 @@ export function cargarProductosEnCarrito(){
             listadoProductosEnCarrito.innerHTML = `
                 <div class="container-sin-prods">
                     <p>No tenes productos en el carrito.</p>
-                    <a href="/front/pages/productos.html" class="boton-agregar-carrito">Ver Productos</a>
+                    <a href="../pages/productos.html" class="boton-agregar-carrito">Ver Productos</a>
                 </div>
             `;
 
@@ -92,7 +92,7 @@ export function cargarCantidadEnHeader() {
 }
 
 export function redirigirACarrito(producto) {
-    window.location.href = '/front/pages/carrito.html'; 
+    window.location.href = '../pages/carrito.html'; 
     agregarAlCarrito(producto);
 }
 

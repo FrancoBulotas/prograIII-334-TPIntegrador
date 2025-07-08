@@ -41,7 +41,7 @@ export async function generarTicket() {
     }
 
     vaciarCarrito();
-    window.location.href = `/front/pages/ticket.html?id=${idVenta}`;
+    window.location.href = `../pages/ticket.html?id=${idVenta}`;
   } catch (err) {
     console.error(err);
     alert('Ocurrió un error al procesar la venta');
@@ -100,7 +100,7 @@ async function cargarTicket() {
         </table>
         <h2 class="titulo">Total: $${venta.total}</h2>
         <button class="boton boton-secundario"
-          onclick="window.location.href='/front/pages/productos.html'">
+          onclick="window.location.href='../pages/productos.html'">
           Volver a Productos
         </button>
       </div>

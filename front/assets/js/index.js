@@ -155,13 +155,13 @@ const modoSwitch = document.getElementById("modo-switch");
 
 function actualizarIconosModo(modo) {
     if (modo === "oscuro") {
-        iconoSol.src = "/front/assets/images/solBlanco.png"; 
-        iconoLuna.src = "/front/assets/images/lunaBlanca.png";
-        iconoCarrito.src = "/front/assets/images/carritoBlanco-autopartes.png";
+        iconoSol.src = "../assets/images/solBlanco.png"; 
+        iconoLuna.src = "../assets/images/lunaBlanca.png";
+        iconoCarrito.src = "../assets/images/carritoBlanco-autopartes.png";
     } else {
-        iconoSol.src = "/front/assets/images/sol.png";
-        iconoLuna.src = "/front/assets/images/luna.png";
-        iconoCarrito.src = "/front/assets/images/carrito-autopartes.png";
+        iconoSol.src = "../assets/images/sol.png";
+        iconoLuna.src = "../assets/images/luna.png";
+        iconoCarrito.src = "../assets/images/carrito-autopartes.png";
     }
 }
 
