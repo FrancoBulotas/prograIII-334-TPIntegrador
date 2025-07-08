@@ -35,6 +35,10 @@ app.use("/api/auth", authRouter);
 // rutas de la aplicacion ejs //
 app.use('/dashboard', viewRouter);
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en puerto ${PORT}`)
-});
+if (process.env.NODE_ENV !== 'produccion') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor local corriendo en puerto ${PORT}`);
+  });
+}
+
+export default app;
