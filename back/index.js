@@ -1,7 +1,5 @@
 
 import express from 'express';
-import env from './src/api/config/environments.js';
-
 import cors from 'cors';
 
 import middlewares from './src/api/middlewares/middlewares.js';
@@ -12,7 +10,6 @@ import authRouter from './src/api/controllers/auth.js';
 
 import { __dirname, join } from './src/api/utils/index.js';
 
-const PORT = env.port;
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -35,10 +32,4 @@ app.use("/api/auth", authRouter);
 // rutas de la aplicacion ejs //
 app.use('/dashboard', viewRouter);
 
-// if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Servidor local corriendo en puerto ${PORT}`);
-  });
-// }
-
-// export default app;
+export default app;
