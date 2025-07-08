@@ -6,15 +6,12 @@
       "src": "src/api/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": "src/views/**/*.ejs"
+        "includeFiles": "src/{views,public}/**/*"
       }
     }
   ],
   "routes": [
-    { "src": "/css/(.*)",      "dest": "src/public/css/$1" },
-    { "src": "/img/(.*)",      "dest": "src/public/img/$1" },
-    { "src": "/favicon\\.ico", "dest": "src/public/favicon.ico" },
-    { "src": "/api/(.*)",       "dest": "src/api/index.js" },
+    { "src": "/api/(.*)", "dest": "src/api/index.js" },
     { "src": "/dashboard/(.*)", "dest": "src/api/index.js" }
   ]
 }
