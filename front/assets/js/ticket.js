@@ -101,8 +101,8 @@ async function cargarTicket() {
         </table>
         <h2 class="titulo">Total: $${venta.total}</h2>
         <button class="boton boton-secundario"
-          onclick="window.location.href='../pages/productos.html'">
-          Volver a Productos
+          onclick="window.location.href='../index.html'">
+          Inicio
         </button>
       </div>
     `;
