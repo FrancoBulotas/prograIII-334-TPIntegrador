@@ -34,24 +34,39 @@
         <section class="general-section">
             <div class="general-content">
                 <h1>Bienvenido/a al Autoservicio</h1>
-                <p>Ingresa tu nombre para comenzar</p>
+                <p>Ingresa tus datos para comenzar</p>
                 <input type="text" id="nombre-usuario" autocomplete= "off" placeholder="Ingresa tu nombre"   >
+                <input type="email" id="email-usuario" autocomplete="off" placeholder="Ingresa tu email" >
+                <input type="password" id="password-usuario" placeholder="Ingresa tu contraseña" >
                 <button id="boton-ingresar">Continuar</button>
+                <p style="margin-top: 20px;">
+                    ¿No tenes cuenta? <a href="./pages/registro.html">Registrate</a>
+                </p>
             </div>
         </section>
     </main>
 </body>
 <script>
-    document.getElementById("boton-ingresar")?.addEventListener('click', () => {
+    document.getElementById("boton-ingresar")?.addEventListener('click', async () => {
         const nombreUsuario = document.getElementById('nombre-usuario').value;
+        const email = document.getElementById('email-usuario').value;
+        const password = document.getElementById('password-usuario').value;
 
-        if (nombreUsuario.trim() === '') {
-            alert('Por favor, ingresa tu nombre.');
+        if (email.trim() === '' || password.trim() === '' || nombreUsuario.trim() === '') {
+            alert("Por favor, completá todos los campos.");
+            return;
         } else {
             localStorage.setItem('nombreUsuario', nombreUsuario);
-            window.location.href = '/front/pages/productos.html'; 
+            window.location.href = "/front/pages/productos.html";
         }
     });
+
+    document.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('boton-ingresar').click();
+        }
+    });
+
     window.addEventListener("DOMContentLoaded", () => {
         const modoGuardado = localStorage.getItem("modoProductos");
         if (modoGuardado === "oscuro") {

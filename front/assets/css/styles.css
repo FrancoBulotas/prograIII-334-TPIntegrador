@@ -58,7 +58,7 @@ nav {
     width: 250px;
 }
 
-#nombre-usuario {
+#nombre-usuario, #email-usuario, #password-usuario {
     padding: 10px;
     border: 1px solid#a2a3a7;
     box-shadow: none;
@@ -67,8 +67,8 @@ nav {
     text-align: left; 
 }
 
-/* Boton Ingresar*/
-#boton-ingresar {
+/* Boton Ingresar y Registrar*/
+#boton-ingresar, #boton-registrar {
     background-color: #3178FF; 
     color: white;
     padding: 10px 20px;
@@ -78,8 +78,12 @@ nav {
     width: 270px;
     transition: 0.3s ease;
 }
-#boton-ingresar:hover {
+#boton-ingresar:hover, #boton-registrar:hover {
     background-color: #2457b6; 
+}
+#rol-usuario{
+    width: 260px;
+    height: 20px;
 }
 
 
