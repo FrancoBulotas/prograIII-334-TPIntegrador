@@ -6,7 +6,7 @@
       "src": "src/api/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": "src/api/views/**/*.ejs"
+        "includeFiles": "src/api/views/*.ejs"
       }
     }
   ],
