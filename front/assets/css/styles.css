@@ -127,7 +127,7 @@ nav {
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
-    margin: 0 auto ;
+    margin: auto 250px;
     gap: 5px;
 }
 
