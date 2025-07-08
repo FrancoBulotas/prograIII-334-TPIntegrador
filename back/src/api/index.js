@@ -1,23 +1,23 @@
 
 import express from 'express';
-import env from './src/api/config/environments.js';
+import env from './config/environments.js';
 
 import cors from 'cors';
 
-import middlewares from './src/api/middlewares/middlewares.js';
+import middlewares from './middlewares/middlewares.js';
 
-import { productosRouter, viewRouter, categoriasRouter, ventasRouter } from './src/api/routes/index.js';
+import { productosRouter, viewRouter, categoriasRouter, ventasRouter } from './routes/index.js';
 
-import authRouter from './src/api/controllers/auth.js';
+import authRouter from './controllers/auth.js';
 
-import { __dirname, join } from './src/api/utils/index.js';
+import { __dirname, join } from './utils/index.js';
 
 const PORT = env.port;
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', join(__dirname, 'src/views'));
-app.use(express.static(join(__dirname, 'src/public')));
+app.set('views', join(__dirname, '../views'));
+app.use(express.static(join(__dirname, '../public')));
 
 // Middlewares de aplicacion //
 app.use(express.json()); 

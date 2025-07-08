@@ -74,7 +74,7 @@ export const handleNewProduct = async (req, res) => {
       return res.status(400).send("La imagen es requerida");
     }
 
-    const imagenPublica = `http://localhost:${env.port}/img/uploads/${req.file.filename}`;
+    const imagenPublica = `https://progra-iii-334-tp-integrador.vercel.app/img/uploads/${req.file.filename}`;
 
     await Products.insertNewProduct(
       nombre,
@@ -111,7 +111,7 @@ export const handleEditProduct = async (req, res) => {
     // si se subio nuevaimagen la usamos, si no, mantenemos la anterior
     let imagenPublica = producto.imagen;
     if (req.file) {
-      imagenPublica = `http://localhost:${env.port}/img/uploads/${req.file.filename}`;
+      imagenPublica = `https://progra-iii-334-tp-integrador.vercel.app/img/uploads/${req.file.filename}`;
     }
     
     await Products.updateProduct(
