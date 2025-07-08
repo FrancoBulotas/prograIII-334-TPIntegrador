@@ -1,6 +1,7 @@
 
 import Venta from "../models/ventas.models.js"
 import { DateTime } from "luxon";
+import ExcelJS from 'exceljs';
 
 // ventas:
 // [DONE] -	GET /ventas * 		    -> en este la idea es que se tome el carrito y se separe en prods y se agreguen en la tabla detalleVenta
@@ -135,3 +136,38 @@ export const createSaleDetail = async (req, res) => {
     }
 }
 
+export const descargarVentasExcel = async (req, res) => {
+  try {
+    const [ventas] = await Venta.selectAllSales();
+
+    // creamos workbook y pestaña
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'AutoPartes Express';
+    workbook.created  = new Date();
+
+    const pestañaVentas = workbook.addWorksheet('Ventas');
+    pestañaVentas.columns = [
+      { header: 'ID Venta', key: 'id_venta', width: 10 },
+      { header: 'Cliente', key: 'cliente', width: 20 },
+      { header: 'Fecha', key: 'fecha', width: 20 },
+      { header: 'Total', key: 'total', width: 10}
+    ];
+    ventas.forEach(venta => pestañaVentas.addRow(venta));
+
+    // enviamos como descarga
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename="ventas_detalles.xlsx"'
+    );
+
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (err) {
+    console.error('Error al generar Excel:', err);
+    res.status(500).send('No se pudo exportar las ventas.');
+  }
+};
